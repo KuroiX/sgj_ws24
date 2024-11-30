@@ -44,6 +44,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveRightOnLanes"",
+                    ""type"": ""Button"",
+                    ""id"": ""39a83381-dc09-49a9-9afc-7225dc71b9f6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveLeftOnLanes"",
+                    ""type"": ""Button"",
+                    ""id"": ""faca3158-a687-4399-80b9-69d9957d0747"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +185,72 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Hit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""833d1612-ecd0-4791-96ea-2a26f0d64510"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRightOnLanes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43334cd3-bc60-4b2b-a07a-d183fbd14ccc"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRightOnLanes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44d0d6ee-1281-4db8-9dbe-bc196fc86f07"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRightOnLanes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c5b71a7-a440-4c2b-b6d2-3fb04c6690d9"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeftOnLanes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""977d11e7-3df5-4445-955b-93f03ceaeb99"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeftOnLanes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fdc7107-2f1c-4dbb-8ae9-0e5b83dc60ec"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeftOnLanes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -177,6 +261,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_Move = m_Default.FindAction("Move", throwIfNotFound: true);
         m_Default_Hit = m_Default.FindAction("Hit", throwIfNotFound: true);
+        m_Default_MoveRightOnLanes = m_Default.FindAction("MoveRightOnLanes", throwIfNotFound: true);
+        m_Default_MoveLeftOnLanes = m_Default.FindAction("MoveLeftOnLanes", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -245,12 +331,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IDefaultActions> m_DefaultActionsCallbackInterfaces = new List<IDefaultActions>();
     private readonly InputAction m_Default_Move;
     private readonly InputAction m_Default_Hit;
+    private readonly InputAction m_Default_MoveRightOnLanes;
+    private readonly InputAction m_Default_MoveLeftOnLanes;
     public struct DefaultActions
     {
         private @Controls m_Wrapper;
         public DefaultActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Default_Move;
         public InputAction @Hit => m_Wrapper.m_Default_Hit;
+        public InputAction @MoveRightOnLanes => m_Wrapper.m_Default_MoveRightOnLanes;
+        public InputAction @MoveLeftOnLanes => m_Wrapper.m_Default_MoveLeftOnLanes;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -266,6 +356,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Hit.started += instance.OnHit;
             @Hit.performed += instance.OnHit;
             @Hit.canceled += instance.OnHit;
+            @MoveRightOnLanes.started += instance.OnMoveRightOnLanes;
+            @MoveRightOnLanes.performed += instance.OnMoveRightOnLanes;
+            @MoveRightOnLanes.canceled += instance.OnMoveRightOnLanes;
+            @MoveLeftOnLanes.started += instance.OnMoveLeftOnLanes;
+            @MoveLeftOnLanes.performed += instance.OnMoveLeftOnLanes;
+            @MoveLeftOnLanes.canceled += instance.OnMoveLeftOnLanes;
         }
 
         private void UnregisterCallbacks(IDefaultActions instance)
@@ -276,6 +372,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Hit.started -= instance.OnHit;
             @Hit.performed -= instance.OnHit;
             @Hit.canceled -= instance.OnHit;
+            @MoveRightOnLanes.started -= instance.OnMoveRightOnLanes;
+            @MoveRightOnLanes.performed -= instance.OnMoveRightOnLanes;
+            @MoveRightOnLanes.canceled -= instance.OnMoveRightOnLanes;
+            @MoveLeftOnLanes.started -= instance.OnMoveLeftOnLanes;
+            @MoveLeftOnLanes.performed -= instance.OnMoveLeftOnLanes;
+            @MoveLeftOnLanes.canceled -= instance.OnMoveLeftOnLanes;
         }
 
         public void RemoveCallbacks(IDefaultActions instance)
@@ -297,5 +399,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnHit(InputAction.CallbackContext context);
+        void OnMoveRightOnLanes(InputAction.CallbackContext context);
+        void OnMoveLeftOnLanes(InputAction.CallbackContext context);
     }
 }

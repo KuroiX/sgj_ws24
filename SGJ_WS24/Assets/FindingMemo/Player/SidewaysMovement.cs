@@ -34,8 +34,18 @@ namespace FindingMemo.Player
         private void OnEnable()
         {
             actions = new Controls();
-            actions.Default.Move.performed += OnMoveInput;
-            actions.Default.Move.canceled += OnCancelMoveInput;
+
+            if (useLanes)
+            {
+                actions.Default.MoveLeftOnLanes.performed += OnMoveLeft;
+                actions.Default.MoveRightOnLanes.performed += OnMoveRight;
+            }
+            else
+            {
+                actions.Default.Move.performed += OnMoveInput;
+                actions.Default.Move.canceled += OnCancelMoveInput;
+            }
+
             actions.Default.Enable();
         }
 
@@ -52,6 +62,24 @@ namespace FindingMemo.Player
         }
 #endif
 
+        private void OnMoveLeft(InputAction.CallbackContext callbackContext)
+        {
+            ChangeLaneInDirection(-1);
+        }
+
+        private void OnMoveRight(InputAction.CallbackContext callbackContext)
+        {
+            ChangeLaneInDirection(1);
+        }
+
+        private void ChangeLaneInDirection(int signValue)
+        {
+            currentLane = Math.Clamp(currentLane + signValue, -1, 1);
+            transform.position = new Vector3(initialPosition.x + currentLane * spacingBetweenLines,
+                transform.position.y, transform.position.z);
+        }
+
+
         private void OnMoveInput(InputAction.CallbackContext input)
         {
             var inputValue = input.ReadValue<float>();
@@ -59,12 +87,6 @@ namespace FindingMemo.Player
             sign = inputValue < 0
                 ? -1
                 : 1;
-
-            if (!useLanes) return;
-
-            currentLane = Math.Clamp(currentLane + sign, -1, 1);
-            transform.position = new Vector3(initialPosition.x + currentLane * spacingBetweenLines,
-                transform.position.y, transform.position.z);
         }
 
 
