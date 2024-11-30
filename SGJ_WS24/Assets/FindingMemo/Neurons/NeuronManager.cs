@@ -7,7 +7,6 @@ namespace FindingMemo.Neurons
 {
     public class NeuronManager : MonoBehaviour
     {
-        [SerializeField] private GameObject neuronPrefab;
         [SerializeField] private HitNeurons hitNeurons;
         [SerializeField] private Score scoreManager;
 
@@ -19,6 +18,18 @@ namespace FindingMemo.Neurons
             if (Instance != null) return;
             Instance = this;
             neurons.Clear();
+            AddAllNeuronsToQueue();
+        }
+
+        private void AddAllNeuronsToQueue()
+        {
+            var neuronsInScene = FindObjectsOfType<Neuron>();
+
+            foreach (var neuron in neuronsInScene) neurons.Add(neuron);
+
+            neurons.Sort((a, b) => a.transform.position.y < b.transform.position.y
+                ? -1
+                : 1);
         }
 
         private void Start()
@@ -53,16 +64,12 @@ namespace FindingMemo.Neurons
         {
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
+            neurons.RemoveAt(0);
         }
 
-        public void AddToQueue(Neuron neuron)
+        public void RemoveNeuronFromList(Neuron neuron)
         {
-            neurons.Add(neuron);
-            neurons.Sort((a, b) => a.transform.position.y < b.transform.position.y
-                ? -1
-                : 1);
-
-            print($"added neuron {neuron.name} at index {neurons.IndexOf(neuron)}");
+            neurons.Remove(neuron);
         }
     }
 }
