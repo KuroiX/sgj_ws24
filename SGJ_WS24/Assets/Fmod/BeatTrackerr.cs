@@ -111,7 +111,7 @@ public class BeatTrackerr : MonoBehaviour
         FMODUnity.RuntimeManager.CoreSystem.getSoftwareFormat(out masterSampleRate, out FMOD.SPEAKERMODE speakerMode, out int numRawSpeakers);
     }
 
-    private void StartMusic()
+    public void StartMusic()
     {
         musicPlayEvent.start();
         
@@ -288,6 +288,7 @@ public class BeatTrackerr : MonoBehaviour
 
         beatInterval = 60f / timelineInfo.currentTempo;
         
+        return;
         tempoChanged((float)beatInterval);
     }
 
