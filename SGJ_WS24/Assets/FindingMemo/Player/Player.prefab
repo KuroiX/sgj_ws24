@@ -101,6 +101,7 @@ MonoBehaviour:
   accelerationPerFrame: 0.2
   maxSpeed: 10
   doAccelerate: 1
+  sideLimit: 8.5
 --- !u!114 &9053708145707244656
 MonoBehaviour:
   m_ObjectHideFlags: 0
