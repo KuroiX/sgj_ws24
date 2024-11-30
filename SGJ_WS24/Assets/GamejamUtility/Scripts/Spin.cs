@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks.Triggers;
@@ -45,12 +46,18 @@ public class Spin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+        /* gives errors vector nan
         transform.Rotate(spinSpeed);
 
         spinSpeed *= 0.9f * Time.deltaTime * 500;
         */
-        
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Debug.Log("score" + spinScore);
+        spinScore += 1;
     }
 
     private void SpinSpinner(InputAction.CallbackContext callbackContext)
@@ -72,9 +79,11 @@ public class Spin : MonoBehaviour
     {
         Vector2 value = callbackContext.ReadValue<Vector2>();
         value.Normalize();
-
         transform.up = value;
+        
+        AddSpinScoreToTotal();
     }
+    
     
     private void AddSpinScoreToTotal()
     {
