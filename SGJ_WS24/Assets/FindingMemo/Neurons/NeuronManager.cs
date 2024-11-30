@@ -9,7 +9,7 @@ namespace FindingMemo.Neurons
     public class NeuronManager : MonoBehaviour
     {
         public event Action<Neuron> OnNeuronChanged;
-        
+
         [SerializeField] private HitNeurons player;
         [SerializeField] private Transform map;
         [SerializeField] private Score scoreManager;
@@ -20,7 +20,7 @@ namespace FindingMemo.Neurons
         private readonly float[] lineHeights = {5.98f, 6.57f, 3.76f};
 
         public static NeuronManager Instance;
-        private readonly List<Neuron> neurons = new();
+        public readonly List<Neuron> neurons = new();
 
         private void Awake()
         {
@@ -67,7 +67,7 @@ namespace FindingMemo.Neurons
                 int randomIndex = Random.Range(0, 2);
                 var neuronLine = Instantiate(neuronLines[randomIndex], positionInBetweenNeurons, rotation);
                 var scale = distance / lineHeights[randomIndex];
-                neuronLine.transform.localScale = Vector3.one * scale * 0.5f * 0.8f;
+                neuronLine.transform.localScale = new Vector3(.8f, scale * 0.5f * 0.8f, 1);
                 neuronLine.transform.parent = map;
             }
         }
@@ -107,18 +107,19 @@ namespace FindingMemo.Neurons
 
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
-            neurons.RemoveAt(0);
-            TriggerOnNeuronChanged(neurons[0]);
+            RemoveFirstNeuron();
         }
 
-        public void RemoveNeuronFromList(Neuron neuron)
+        public void RemoveFirstNeuron()
         {
             if (neurons.Count == 0) return;
-            if (neurons.Contains(neuron))
-            {
-                neurons.Remove(neuron);
-                TriggerOnNeuronChanged(neurons[0]);
-            }
+
+            var neuron = neurons[0];
+            neurons.RemoveAt(0);
+            
+            Destroy(neuron.gameObject);
+            neuron.SetAlreadyRemovedFlag();
+            TriggerOnNeuronChanged(neuron);
         }
     }
 }

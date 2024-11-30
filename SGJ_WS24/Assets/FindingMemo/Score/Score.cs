@@ -8,6 +8,8 @@ using UnityEngine.Serialization;
 
 public class Score : MonoBehaviour
 {
+	[SerializeField] private Transform playerTransform;
+	
 	// constants
 	[SerializeField] private float[] scoreIntervals = {0f, 0.04f, 0.16f, 0.36f, 0.64f};
 	[SerializeField] private float radiusScale = 10f;
@@ -113,7 +115,7 @@ public class Score : MonoBehaviour
 	
 	private void OnDrawGizmos()
 	{
-		List<Neuron> neurons = NeuronManager.Instance.neurons;
+		//List<Neuron> neurons = NeuronManager.Instance.neurons;
 		
 		/*
 		 * perfect: 2
@@ -124,18 +126,21 @@ public class Score : MonoBehaviour
 		 *
 		 */
 
+		
 		Color[] colors = {
 			new Color(1,1,1, 0.25f), // Red with 50% transparency
 			new Color(1,1,1, 0.33f), // Yellow with 50% transparency
 			new Color(1,1,1, 0.5f), // Blue with 50% transparency
 			new Color(1,1,1, 0.66f), // Magenta with 50% transparency
-			new Color(1,1,1, 1f)  // Cyan with 50% transparency
+			new Color(1,1,1, 0.9f)  // Cyan with 50% transparency
 		};
-		Gizmos.DrawSphere(neurons[0].gameObject.transform.position, 1 * radiusScale);
+		
+		//Gizmos.DrawSphere(playerTransform.position, 1 * radiusScale);
+		
 		for (int i = scoreIntervals.Length - 1; i >= 0; i--)
 		{
 			Gizmos.color = colors[i];
-			Gizmos.DrawSphere(neurons[0].gameObject.transform.position, scoreIntervals[i] * radiusScale);
+			Gizmos.DrawSphere(playerTransform.position, (1- scoreIntervals[i]) * radiusScale);
 		}
 		
 	}

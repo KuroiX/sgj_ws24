@@ -56,6 +56,7 @@ public class MemoryCardManager : MonoBehaviour
 
     public void OnScoreChanged(uint newScore)
     {
+        if (currentMemoryCardIndex >= memoryCardObjs.Length) return;
         
         var newMemoryCardInfo = memoryCardObjs[currentMemoryCardIndex];
 
