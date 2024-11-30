@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Kerstin
+namespace FindMemo.Player
 {
     public class SidewaysMovement : MonoBehaviour
     {

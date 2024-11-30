@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Kerstin
+namespace FindMemo.Player
 {
     public class HitNeurons : MonoBehaviour
     {
@@ -19,6 +19,11 @@ namespace Kerstin
         private void OnDisable()
         {
             actions?.Default.Disable();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            print($"ontrigger enter: {other}");
         }
 
         private void OnHit(InputAction.CallbackContext callbackContext)
