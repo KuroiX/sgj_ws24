@@ -56,7 +56,6 @@ public class Spin : MonoBehaviour
     private void SpinSpinner(InputAction.CallbackContext callbackContext)
     {
         rotationAmount += rotationSpeed * speedMultiplier;
-        Debug.Log("fff" + rotationAmount);
         spinSpeed.z =  rotationAmount;
         transform.Rotate(spinSpeed);
         
@@ -71,15 +70,10 @@ public class Spin : MonoBehaviour
 
     private void SpinSpin(InputAction.CallbackContext callbackContext)
     {
-        Debug.Log(":(");
         Vector2 value = callbackContext.ReadValue<Vector2>();
         value.Normalize();
-        Debug.Log("jjj" + value);
-        
-        Vector3 moveVector = Vector3.up * value.x + Vector3.left * value.y;
-        
-        //transform.rotation = Quaternion.LookRotation(Vector3.forward, moveVector);
-        SpinSpinner(callbackContext);
+
+        transform.up = value;
     }
     
     private void AddSpinScoreToTotal()
