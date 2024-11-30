@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FindMemo.Neurons
+namespace FindingMemo.Neurons
 {
     public class Neuron : MonoBehaviour
     {

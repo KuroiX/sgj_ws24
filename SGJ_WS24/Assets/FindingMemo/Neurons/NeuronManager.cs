@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using FindMemo.Player;
+using FindingMemo.Player;
 using UnityEngine;
 
-namespace FindMemo.Neurons
+namespace FindingMemo.Neurons
 {
     public class NeuronManager : MonoBehaviour
     {
@@ -30,14 +30,27 @@ namespace FindMemo.Neurons
             return neurons.Peek();
         }
 
-        private void OnHitPressed(Vector3 position)
+        private Vector2 GetDistanceToNearestNeuronFrom(Vector3 position)
         {
             var nearestNeuron = GetNextNeuron();
 
             Vector2 distance = position - nearestNeuron.position;
             distance.x = Math.Abs(distance.x);
             distance.y = Math.Abs(distance.y);
+
+            return distance;
+        }
+
+        private Vector2 GetDistanceToNearestNeuronFromPlayer()
+        {
+            return GetDistanceToNearestNeuronFrom(hitNeurons.transform.position);
+        }
+
+        private void OnHitPressed()
+        {
+            var distance = GetDistanceToNearestNeuronFromPlayer();
             // TODO: call score method
+            print($"distance: {distance}");
         }
     }
 }

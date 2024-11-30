@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace FindMemo.Player
+namespace FindingMemo.Player
 {
     public class HitNeurons : MonoBehaviour
     {
-        public Action<Vector3> OnHitted;
+        public Action OnHitted;
         private Controls actions;
 
         private void OnEnable()
@@ -24,7 +24,7 @@ namespace FindMemo.Player
 
         private void OnHit(InputAction.CallbackContext callbackContext)
         {
-            OnHitted?.Invoke(transform.position);
+            OnHitted?.Invoke();
         }
     }
 }

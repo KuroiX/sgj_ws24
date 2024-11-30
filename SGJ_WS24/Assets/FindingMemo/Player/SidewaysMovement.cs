@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace FindMemo.Player
+namespace FindingMemo.Player
 {
     public class SidewaysMovement : MonoBehaviour
     {
