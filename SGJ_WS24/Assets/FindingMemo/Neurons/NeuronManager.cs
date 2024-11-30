@@ -52,7 +52,10 @@ namespace FindingMemo.Neurons
         {
             for (int i = 0; i + 1 < Neurons.Count; i++)
             {
-                var neuron0Position = Neurons[i].transform.position;
+                var firstNeuron = Neurons[i];
+                if (!firstNeuron.buildConnectionToNextNeuron) continue;
+
+                var neuron0Position = firstNeuron.transform.position;
                 var neuron1Position = Neurons[i + 1].transform.position;
 
                 var positionInBetweenNeurons = neuron0Position + 0.5f * (neuron1Position - neuron0Position);

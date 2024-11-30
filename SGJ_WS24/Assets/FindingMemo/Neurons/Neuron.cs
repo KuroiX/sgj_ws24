@@ -1,5 +1,4 @@
-﻿using System;
-using FindingMemo.Player;
+﻿using FindingMemo.Player;
 using UnityEngine;
 
 namespace FindingMemo.Neurons
@@ -7,7 +6,8 @@ namespace FindingMemo.Neurons
     public class Neuron : MonoBehaviour
     {
         [SerializeField] private float abziehen;
-        
+        public bool buildConnectionToNextNeuron = true;
+
         private SidewaysMovement sidewaysMovement;
         private float movementYPos;
         private bool wasAlreadyRemoved;
