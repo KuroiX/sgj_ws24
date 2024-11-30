@@ -7,19 +7,15 @@ namespace FindMemo.Neurons
 {
     public class NeuronManager : MonoBehaviour
     {
-        [SerializeField] private int amountInFirstWave = 4;
         [SerializeField] private GameObject neuronPrefab;
-        [SerializeField] private Transform heightLine;
-        [SerializeField] private float xVariation;
         [SerializeField] private HitNeurons hitNeurons;
+        [SerializeField] private Transform testNeuron;
 
-        private Queue<Transform> neurons = new();
-        private float yPos;
+        private readonly Queue<Transform> neurons = new();
 
         private void Awake()
         {
-            yPos = heightLine.position.y;
-            // TODO: spawn first x
+            neurons.Enqueue(testNeuron);
         }
 
         private void Start()
@@ -27,16 +23,6 @@ namespace FindMemo.Neurons
             hitNeurons.OnHitted += OnHitPressed;
         }
 
-        private void SpawnNewNeuron()
-        {
-            Transform neuron = Instantiate(neuronPrefab, GetSpawnPosition(), Quaternion.identity).transform;
-            neurons.Enqueue(neuron);
-        }
-
-        private Vector3 GetSpawnPosition()
-        {
-            return heightLine.position;
-        }
 
         private Transform GetNextNeuron()
         {
@@ -46,7 +32,12 @@ namespace FindMemo.Neurons
 
         private void OnHitPressed(Vector3 position)
         {
-            print($"NeuronManager OnHit with position {position}. Next Neuron is {GetNextNeuron()}");
+            var nearestNeuron = GetNextNeuron();
+
+            Vector2 distance = position - nearestNeuron.position;
+            distance.x = Math.Abs(distance.x);
+            distance.y = Math.Abs(distance.y);
+            // TODO: call score method
         }
     }
 }

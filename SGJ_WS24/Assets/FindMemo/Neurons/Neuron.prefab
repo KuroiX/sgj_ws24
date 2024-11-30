@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7502861527425259833}
   - component: {fileID: 2886487679062566833}
   - component: {fileID: 2539234596713500774}
+  - component: {fileID: 8252865263871175655}
   m_Layer: 0
   m_Name: Neuron
   m_TagString: Neuron
@@ -145,6 +146,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+--- !u!114 &8252865263871175655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4017021018067307150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b2b68f75c04c0c9398d50e6017b255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4516947927682272201
 GameObject:
   m_ObjectHideFlags: 0
