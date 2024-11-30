@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1524533970525000396}
   - component: {fileID: 5536202623952643824}
   m_Layer: 0
-  m_Name: CFXR4 _POISONED_
+  m_Name: Bad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4954,7 +4954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDynamic: 0
-  text: MISS
+  text: BAD
   size: 0.25
   letterSpacing: 0.35
   backgroundColor: {r: 0.014080002, g: 0.22, b: 0.036960013, a: 1}
