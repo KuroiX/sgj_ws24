@@ -21,9 +21,16 @@ namespace FindMemo.Player
             actions?.Default.Disable();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            print($"ontrigger enter: {other}");
+            if (!other.CompareTag("Neuron")) return;
+            isInNeuronArea = true;
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!other.CompareTag("Neuron")) return;
+            isInNeuronArea = false;
         }
 
         private void OnHit(InputAction.CallbackContext callbackContext)
