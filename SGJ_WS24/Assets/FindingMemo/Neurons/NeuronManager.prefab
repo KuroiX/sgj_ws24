@@ -48,6 +48,7 @@ MonoBehaviour:
   player: {fileID: 0}
   map: {fileID: 0}
   scoreManager: {fileID: 0}
+  maximalDistanceToRemoveNeuron: 1.9
   neuronLines:
   - {fileID: 2124540024910744960, guid: 699802bc94b7bc849bda9c1ddb907017, type: 3}
   - {fileID: 8553166488836274232, guid: 75a310dec790ae548a70e87dc5abce8f, type: 3}

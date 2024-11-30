@@ -13,6 +13,7 @@ namespace FindingMemo.Neurons
         [SerializeField] private HitNeurons player;
         [SerializeField] private Transform map;
         [SerializeField] private Score scoreManager;
+        [SerializeField] private float maximalDistanceToRemoveNeuron = 1.9f;
 
         [Header("NeuronLines")] [SerializeField]
         private GameObject[] neuronLines;
@@ -20,13 +21,13 @@ namespace FindingMemo.Neurons
         private readonly float[] lineHeights = {5.98f, 6.57f, 3.76f};
 
         public static NeuronManager Instance;
-        public readonly List<Neuron> neurons = new();
+        public readonly List<Neuron> Neurons = new();
 
         private void Awake()
         {
             if (Instance != null) return;
             Instance = this;
-            neurons.Clear();
+            Neurons.Clear();
             AddAllNeuronsToQueue();
             AddConnectionsToNeurons();
         }
@@ -40,19 +41,19 @@ namespace FindingMemo.Neurons
         {
             var neuronsInScene = FindObjectsOfType<Neuron>();
 
-            foreach (var neuron in neuronsInScene) neurons.Add(neuron);
+            foreach (var neuron in neuronsInScene) Neurons.Add(neuron);
 
-            neurons.Sort((a, b) => a.transform.position.y < b.transform.position.y
+            Neurons.Sort((a, b) => a.transform.position.y < b.transform.position.y
                 ? -1
                 : 1);
         }
 
         private void AddConnectionsToNeurons()
         {
-            for (int i = 0; i + 1 < neurons.Count; i++)
+            for (int i = 0; i + 1 < Neurons.Count; i++)
             {
-                var neuron0Position = neurons[i].transform.position;
-                var neuron1Position = neurons[i + 1].transform.position;
+                var neuron0Position = Neurons[i].transform.position;
+                var neuron1Position = Neurons[i + 1].transform.position;
 
                 var positionInBetweenNeurons = neuron0Position + 0.5f * (neuron1Position - neuron0Position);
 
@@ -81,8 +82,8 @@ namespace FindingMemo.Neurons
 
         private Neuron GetNextNeuron()
         {
-            if (neurons.Count == 0) return null;
-            return neurons[0];
+            if (Neurons.Count == 0) return null;
+            return Neurons[0];
         }
 
         private Vector2 GetDistanceToNearestNeuronFrom(Vector3 position)
@@ -103,21 +104,22 @@ namespace FindingMemo.Neurons
 
         private void OnHitPressed()
         {
-            if (neurons.Count == 0) return;
+            if (Neurons.Count == 0) return;
 
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
-            RemoveFirstNeuron();
+
+            if (distance.magnitude <= maximalDistanceToRemoveNeuron) RemoveFirstNeuron();
         }
 
         public void RemoveFirstNeuron()
         {
-            if (neurons.Count == 0) return;
+            if (Neurons.Count == 0) return;
 
-            var neuron = neurons[0];
-            neurons.RemoveAt(0);
+            var neuron = Neurons[0];
+            Neurons.RemoveAt(0);
             neuron.SetAlreadyRemovedFlag();
-            TriggerOnNeuronChanged(neurons[0]);
+            TriggerOnNeuronChanged(Neurons[0]);
         }
     }
 }

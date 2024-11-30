@@ -22,11 +22,7 @@ namespace FindingMemo.Neurons
         private void Update()
         {
             if (wasAlreadyRemoved) return;
-            if (transform.position.y < movementYPos)
-            {
-                Debug.Log($"beat: removed {DateTime.Now:HH:mm:ss.fff} + {this.gameObject.name}");
-                NeuronManager.Instance.RemoveFirstNeuron();
-            }
+            if (transform.position.y < movementYPos) NeuronManager.Instance.RemoveFirstNeuron();
         }
 
         public void SetAlreadyRemovedFlag()
