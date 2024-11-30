@@ -8,6 +8,8 @@ namespace FindingMemo.Neurons
 {
     public class NeuronManager : MonoBehaviour
     {
+        public event Action<Neuron> OnNeuronChanged;
+        
         [SerializeField] private HitNeurons player;
         [SerializeField] private Transform map;
         [SerializeField] private Score scoreManager;
@@ -27,6 +29,11 @@ namespace FindingMemo.Neurons
             neurons.Clear();
             AddAllNeuronsToQueue();
             AddConnectionsToNeurons();
+        }
+
+        private void TriggerOnNeuronChanged(Neuron neuron)
+        {
+            OnNeuronChanged?.Invoke(neuron);
         }
 
         private void AddAllNeuronsToQueue()
@@ -101,12 +108,17 @@ namespace FindingMemo.Neurons
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
             neurons.RemoveAt(0);
+            TriggerOnNeuronChanged(neurons[0]);
         }
 
         public void RemoveNeuronFromList(Neuron neuron)
         {
             if (neurons.Count == 0) return;
-            if (neurons.Contains(neuron)) neurons.Remove(neuron);
+            if (neurons.Contains(neuron))
+            {
+                neurons.Remove(neuron);
+                TriggerOnNeuronChanged(neurons[0]);
+            }
         }
     }
 }
