@@ -1,19 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-
-public enum HitType
-{
-    Perfect, Great, Good, Bad, Miss
-}
+using UnityEngine.Events;
 
 public class ScoreEffectManager : MonoBehaviour
 {
+    [SerializeField] private Score scoreManager;
+    
     public ParticleSystem miss;
     public ParticleSystem bad;
     public ParticleSystem good;
     public ParticleSystem great;
     public ParticleSystem perfect;
+
+    private void OnEnable()
+    {
+        scoreManager.OnHit += TriggerEffect;
+    }
+
+    private void OnDisable()
+    {
+        scoreManager.OnHit -= TriggerEffect;
+    }
 
     public void TriggerEffect(HitType type)
     {
