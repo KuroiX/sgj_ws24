@@ -12,7 +12,7 @@ public class NueronPuls : MonoBehaviour
 
     private void Cool()
     {
-        Debug.Log("COOL");
+        //Debug.Log("COOL");
         BeatTrackerr.fixedBeatUpdate -= Puls;
         BeatTrackerr.fixedBeatUpdate += Puls;
     }

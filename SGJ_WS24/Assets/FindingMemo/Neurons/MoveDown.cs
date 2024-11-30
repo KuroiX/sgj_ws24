@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace FindingMemo.Neurons
@@ -11,6 +12,7 @@ namespace FindingMemo.Neurons
         public void StartScrolling()
         {
             shouldScroll = true;
+            Debug.Log($"beat: actual beat {DateTime.Now:HH:mm:ss.fff}");
         }
         
         

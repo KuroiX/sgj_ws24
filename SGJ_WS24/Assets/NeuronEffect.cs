@@ -10,6 +10,11 @@ public class NeuronEffect : MonoBehaviour
     private ParticleSystem lastNeuronParticleEffect;
     public NeuronManager neuronManager;
 
+    private void Start()
+    {
+        ActivateNeuronEffect(neuronManager.neurons[0]);
+    }
+
     private void OnEnable()
     {
         neuronManager.OnNeuronChanged += ActivateNeuronEffect;
@@ -22,9 +27,12 @@ public class NeuronEffect : MonoBehaviour
 
     public void ActivateNeuronEffect(Neuron neuron)
     {
-        if (lastNeuronParticleEffect != null)
+        Debug.Log($"Activate neuron {neuron}");
+        
+        if (lastNeuronParticleEffect)
         {
             lastNeuronParticleEffect.Stop();
+            lastNeuronParticleEffect.gameObject.SetActive(false);
         }
 
         lastNeuronParticleEffect = neuron.gameObject.GetComponentInChildren<ParticleSystem>();

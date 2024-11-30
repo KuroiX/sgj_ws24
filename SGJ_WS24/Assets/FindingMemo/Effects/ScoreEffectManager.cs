@@ -6,11 +6,22 @@ public class ScoreEffectManager : MonoBehaviour
 {
     [SerializeField] private Score scoreManager;
     
+    [Header("schrift")]
     public ParticleSystem miss;
     public ParticleSystem bad;
     public ParticleSystem good;
     public ParticleSystem great;
     public ParticleSystem perfect;
+
+    [Header("wegfliegen")] 
+    public ParticleSystem badweg;
+    public ParticleSystem goodweg;
+    public ParticleSystem greatweg;
+    public ParticleSystem perfectweg;
+    
+    [Header("zusatz")]
+    public CameraShake cameraShake;
+    public ParticleSystem hitEffect;
 
     private void OnEnable()
     {
@@ -28,20 +39,27 @@ public class ScoreEffectManager : MonoBehaviour
         {
             case HitType.Miss:
                 miss.Play();
+                hitEffect.Play();
                 break;
             case HitType.Bad:
                 bad.Play();
+                badweg.Play();
                 break;
             case HitType.Good:
                 good.Play();
+                goodweg.Play();
                 break;
             case HitType.Great:
                 great.Play();
+                greatweg.Play();
                 break;
             case HitType.Perfect:
                 perfect.Play();
+                perfectweg.Play();
                 break;
         }
+        
+        cameraShake.TriggerShake(0.2f);
     }
 
     [ContextMenu("Trigger Miss")]
