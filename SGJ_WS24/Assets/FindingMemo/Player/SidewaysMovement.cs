@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +12,18 @@ namespace FindingMemo.Player
         [SerializeField] private bool doAccelerate = true;
         [SerializeField] private float sideLimit = 8.5f;
 
+        [Header("Lanes")] [SerializeField] private bool useLanes = true;
+        [SerializeField] private float spacingBetweenLines = 2f;
+
         private Controls actions;
 
         private bool isMoving = false;
         private float currentSpeed = 0;
         private int sign = 0;
         private Vector3 initialPosition;
+
+        private const int NumberOfLanes = 3;
+        private int currentLane = 0;
 
 
         private void Awake()
@@ -52,12 +59,19 @@ namespace FindingMemo.Player
             sign = inputValue < 0
                 ? -1
                 : 1;
+
+            if (!useLanes) return;
+
+            currentLane = Math.Clamp(currentLane + sign, -1, 1);
+            transform.position = new Vector3(initialPosition.x + currentLane * spacingBetweenLines,
+                transform.position.y, transform.position.z);
         }
 
 
         private void Update()
         {
             if (!isMoving) return;
+            if (useLanes) return;
 
             currentSpeed = doAccelerate
                 ? Math.Clamp(currentSpeed + accelerationPerFrame, 0, maxSpeed)
