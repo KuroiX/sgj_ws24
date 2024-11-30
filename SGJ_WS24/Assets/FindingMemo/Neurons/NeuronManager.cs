@@ -52,7 +52,6 @@ namespace FindingMemo.Neurons
                 var yDistance = neuron1Position.y - neuron0Position.y;
                 var distance = Vector2.Distance(neuron1Position, neuron0Position);
 
-                print(Mathf.Acos(yDistance / distance));
                 var rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Acos(yDistance / distance) *
                                                       (neuron1Position.x < neuron0Position.x
                                                           ? 1
@@ -97,6 +96,8 @@ namespace FindingMemo.Neurons
 
         private void OnHitPressed()
         {
+            if (neurons.Count == 0) return;
+
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
             neurons.RemoveAt(0);
@@ -104,6 +105,7 @@ namespace FindingMemo.Neurons
 
         public void RemoveNeuronFromList(Neuron neuron)
         {
+            if (neurons.Count == 0) return;
             if (neurons.Contains(neuron)) neurons.Remove(neuron);
         }
     }
