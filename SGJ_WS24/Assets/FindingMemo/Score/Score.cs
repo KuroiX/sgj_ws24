@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using FindingMemo.Neurons;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 public class Score : MonoBehaviour
 {
@@ -22,8 +18,9 @@ public class Score : MonoBehaviour
 	};
 	
 	// privates
-	private uint streak;
-	private uint totalScore;
+	private uint totalScore = 0;
+	private uint streak = 0;
+	private uint multiplier = 1;
 	
 	// publics
 	public uint TotalScore { 
@@ -34,17 +31,27 @@ public class Score : MonoBehaviour
 			OnScoreChange?.Invoke(totalScore);
 		}
 	}
-	public event Action<uint> OnScoreChange;
-	public event Action<float> OnMultiplierChange;
-	public event Action<HitType> OnHit;
-	
-	// event functions
-	private void Start()
-	{
-		totalScore = 0;
-		streak = 0;
+	public uint Streak { 
+		get => streak;
+		private set
+		{
+			streak = value;
+			OnStreakChange?.Invoke(streak);
+		}
 	}
-	
+	public uint Multiplier { 
+		get => multiplier;
+		private set
+		{
+			multiplier = value;
+			OnMultiplierChange?.Invoke(multiplier);
+		}
+	}
+	public event Action<uint> OnScoreChange;
+	public event Action<uint> OnStreakChange;
+	public event Action<uint> OnMultiplierChange;
+	public event Action<HitType> OnHit;
+
 	// public functions
 	public void HitNeuron(Vector2 difference)
 	{
@@ -59,9 +66,9 @@ public class Score : MonoBehaviour
 	// score management functions
 	private float DifferenceToNormScore(Vector2 difference)
 	{
-		Debug.Log($"difference {difference}");
+		//Debug.Log($"difference {difference}");
 		float normScore = Math.Max(0, radiusScale - difference.magnitude) / radiusScale;
-		Debug.Log($"normScore {normScore}");
+		//Debug.Log($"normScore {normScore}");
 		return normScore;
 	}
 
@@ -78,7 +85,7 @@ public class Score : MonoBehaviour
 				break;
 			}
 		}
-		Debug.Log($"scoreInterval {scoreInterval}");
+		//Debug.Log($"scoreInterval {scoreInterval}");
 
 		return scoreInterval switch
 		{
@@ -96,51 +103,43 @@ public class Score : MonoBehaviour
 		};
 	}
 
-	private uint DisplayScoreToComboScore(uint displayScore, HitType hitType)  // combos
+	private uint DisplayScoreToComboScore(uint displayScore, HitType hitType)
 	{
 		HashSet<HitType> goodHits = new HashSet<HitType> {HitType.Perfect, HitType.Great, HitType.Good};
 		if (goodHits.Contains(hitType))
 		{
 			streak++;
+			uint newStreak = streak - (multiplier-1) * ((multiplier-1) + 1) / 2 - 1;  // triangular number
+			if (newStreak >= multiplier)
+			{
+				multiplier++;
+			}
+			Debug.Log($"streak {streak}, newStreak {newStreak}, multiplier {multiplier}");
 		}
 		else
 		{
 			streak = 0;
+			multiplier = 1;
 		}
-		float multiplier = Mathf.Max(1, streak / 2);  // integer division intended
-		OnMultiplierChange?.Invoke(multiplier);
-		return (uint) (displayScore * multiplier);
+		
+		return displayScore * multiplier;
 	}
 
 	
 	private void OnDrawGizmos()
 	{
-		//List<Neuron> neurons = NeuronManager.Instance.neurons;
-		
-		/*
-		 * perfect: 2
-		 * great: 4
-		 * good: 6
-		 * bad: 8
-		 * miss: 10
-		 *
-		 */
-
-		
 		Color[] colors = {
-			new Color(1,1,1, 0.25f), // Red with 50% transparency
-			new Color(1,1,1, 0.33f), // Yellow with 50% transparency
-			new Color(1,1,1, 0.5f), // Blue with 50% transparency
-			new Color(1,1,1, 0.66f), // Magenta with 50% transparency
-			new Color(1,1,1, 0.9f)  // Cyan with 50% transparency
+			new Color(1,1,1, 0.25f),
+			new Color(1,1,1, 0.33f),
+			new Color(1,1,1, 0.5f),
+			new Color(1,1,1, 0.66f),
+			new Color(1,1,1, 0.9f)
 		};
-		
-		//Gizmos.DrawSphere(playerTransform.position, 1 * radiusScale);
 		
 		for (int i = scoreIntervals.Length - 1; i >= 0; i--)
 		{
 			Gizmos.color = colors[i];
-			Gizmos.DrawSphere(playerTransform.position, (1- scoreIntervals[i]) * radiusScale);
+			Gizmos.DrawSphere(playerTransform.position, (1 - scoreIntervals[i]) * radiusScale);
 		}
 		
 	}
