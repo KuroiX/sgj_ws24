@@ -1,13 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Kerstin
+namespace FindingMemo.Player
 {
     public class HitNeurons : MonoBehaviour
     {
+        public Action OnHitted;
         private Controls actions;
-
-        private bool isInNeuronArea = false;
 
         private void OnEnable()
         {
@@ -21,9 +21,10 @@ namespace Kerstin
             actions?.Default.Disable();
         }
 
+
         private void OnHit(InputAction.CallbackContext callbackContext)
         {
-            print($"hit success: {isInNeuronArea}");
+            OnHitted?.Invoke();
         }
     }
 }
