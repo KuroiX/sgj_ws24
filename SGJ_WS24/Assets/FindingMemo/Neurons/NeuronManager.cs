@@ -7,7 +7,7 @@ namespace FindingMemo.Neurons
 {
     public class NeuronManager : MonoBehaviour
     {
-        [SerializeField] private HitNeurons hitNeurons;
+        [SerializeField] private HitNeurons player;
         [SerializeField] private Score scoreManager;
 
         public static NeuronManager Instance;
@@ -34,7 +34,7 @@ namespace FindingMemo.Neurons
 
         private void Start()
         {
-            hitNeurons.OnHitted += OnHitPressed;
+            player.OnHitted += OnHitPressed;
         }
 
 
@@ -57,7 +57,7 @@ namespace FindingMemo.Neurons
 
         private Vector2 GetDistanceToNearestNeuronFromPlayer()
         {
-            return GetDistanceToNearestNeuronFrom(hitNeurons.transform.position);
+            return GetDistanceToNearestNeuronFrom(player.transform.position);
         }
 
         private void OnHitPressed()
