@@ -6,7 +6,7 @@ public class ScoreTester : MonoBehaviour
     {
         var scoreManager = GetComponent<Score>();
         
-        scoreManager.OnScoreChange += u => Debug.Log(u);
-        scoreManager.OnHit += u => Debug.Log(u);
+        //scoreManager.OnScoreChange += u => Debug.Log(u);
+        //scoreManager.OnHit += u => Debug.Log(u);
     }
 }
