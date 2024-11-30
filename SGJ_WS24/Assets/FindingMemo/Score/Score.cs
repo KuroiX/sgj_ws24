@@ -43,7 +43,8 @@ public class Score : MonoBehaviour
 	public void HitNeuron(Vector2 difference)
 	{
 		uint hitScore = DifferenceToHitScore(difference);
-		HitType hitType = hitScoreToHitType[hitScore];
+		//HitType hitType = hitScoreToHitType[hitScore];
+		HitType hitType = GetHitTypeTemp(hitScore);
 		CycleHitHistory(hitType);  // TODO: event for combos
 		uint scoreAddition = HitScoreToScoreAddition(hitScore);
 		
@@ -56,6 +57,28 @@ public class Score : MonoBehaviour
 	{
 		float hitScore = maxHit - difference.y;  // difference.magnitude?
 		return (uint)Mathf.RoundToInt(Math.Max(0, hitScore));  // hinge loss
+	}
+
+	private HitType GetHitTypeTemp(uint hitScore)
+	{
+		if (hitScore >= 95)
+		{
+			return HitType.Perfect;
+		}
+		if (hitScore >= 80)
+		{
+			return HitType.Great;
+		}
+		if (hitScore >= 60)
+		{
+			return HitType.Good;
+		}
+		if (hitScore >= 40)
+		{
+			return HitType.Bad;
+		}
+		
+		return HitType.Miss;
 	}
 
 	private uint HitScoreToScoreAddition(uint hitScore)  // combos

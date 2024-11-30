@@ -10,6 +10,8 @@ namespace FindingMemo.Neurons
         [SerializeField] private GameObject neuronPrefab;
         [SerializeField] private HitNeurons hitNeurons;
         [SerializeField] private Transform testNeuron;
+        [SerializeField] private Score scoreManager;
+        
 
         private readonly Queue<Transform> neurons = new();
 
@@ -49,6 +51,7 @@ namespace FindingMemo.Neurons
         private void OnHitPressed()
         {
             var distance = GetDistanceToNearestNeuronFromPlayer();
+            scoreManager.HitNeuron(distance);
             // TODO: call score method
             print($"distance: {distance}");
         }

@@ -43,3 +43,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 592466289
+    locked: 0
+  - name: Connections
+    uniqueID: 2143307485
+    locked: 0
+  - name: Neurons
+    uniqueID: 818847661
+    locked: 0
+  - name: Player
+    uniqueID: 1338162483
+    locked: 0
