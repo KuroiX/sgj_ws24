@@ -20,7 +20,7 @@ namespace FindingMemo.Neurons
         private readonly float[] lineHeights = {5.98f, 6.57f, 3.76f};
 
         public static NeuronManager Instance;
-        private readonly List<Neuron> neurons = new();
+        public readonly List<Neuron> neurons = new();
 
         private void Awake()
         {

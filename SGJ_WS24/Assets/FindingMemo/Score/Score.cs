@@ -1,18 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using FindingMemo.Neurons;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
 public class Score : MonoBehaviour
 {
+	[SerializeField] private Transform playerTransform;
+	
 	// constants
-	[SerializeField] private float radius = 10f;
+	[SerializeField] private float[] scoreIntervals = {0f, 0.04f, 0.16f, 0.36f, 0.64f};
+	[SerializeField] private float radiusScale = 10f;
 	private readonly Dictionary<uint, HitType> displayScoreToHitType = new() {
 		{100, HitType.Perfect},
-		{80, HitType.Great},
-		{60, HitType.Good},
-		{40, HitType.Bad},
+		{75, HitType.Great},
+		{50, HitType.Good},
+		{25, HitType.Bad},
 		{0, HitType.Miss}
 	};
 	
@@ -54,25 +59,26 @@ public class Score : MonoBehaviour
 	// score management functions
 	private float DifferenceToNormScore(Vector2 difference)
 	{
-		float normScore = Math.Max(0, radius - difference.y) / radius;
+		Debug.Log($"difference {difference}");
+		float normScore = Math.Max(0, radiusScale - difference.magnitude) / radiusScale;
+		Debug.Log($"normScore {normScore}");
 		return normScore;
 	}
 
 	private uint NormScoreToDisplayScore(float normScore)
 	{
-		float normScoreExp = Mathf.Exp(normScore * 4.5f) / Mathf.Exp(4.5f) - 1f / Mathf.Exp(4.5f);
+		//normScore = Mathf.Pow(normScore, 1);
 
-		int intervals = 5;
-		float intervalSize = 1f / intervals;
 		float scoreInterval = 0;
-		for (int i = intervals - 1; i >= 0; i++)
+		for (int i = scoreIntervals.Length - 1; i >= 0; i--)
 		{
-			if (normScoreExp >= intervalSize * i)
+			if (normScore >= scoreIntervals[i])
 			{
 				scoreInterval = i;
 				break;
 			}
 		}
+		Debug.Log($"scoreInterval {scoreInterval}");
 
 		return scoreInterval switch
 		{
@@ -104,6 +110,39 @@ public class Score : MonoBehaviour
 		float multiplier = Mathf.Max(1, streak / 2);  // integer division intended
 		OnMultiplierChange?.Invoke(multiplier);
 		return (uint) (displayScore * multiplier);
+	}
+
+	
+	private void OnDrawGizmos()
+	{
+		//List<Neuron> neurons = NeuronManager.Instance.neurons;
+		
+		/*
+		 * perfect: 2
+		 * great: 4
+		 * good: 6
+		 * bad: 8
+		 * miss: 10
+		 *
+		 */
+
+		
+		Color[] colors = {
+			new Color(1,1,1, 0.25f), // Red with 50% transparency
+			new Color(1,1,1, 0.33f), // Yellow with 50% transparency
+			new Color(1,1,1, 0.5f), // Blue with 50% transparency
+			new Color(1,1,1, 0.66f), // Magenta with 50% transparency
+			new Color(1,1,1, 0.9f)  // Cyan with 50% transparency
+		};
+		
+		//Gizmos.DrawSphere(playerTransform.position, 1 * radiusScale);
+		
+		for (int i = scoreIntervals.Length - 1; i >= 0; i--)
+		{
+			Gizmos.color = colors[i];
+			Gizmos.DrawSphere(playerTransform.position, (1- scoreIntervals[i]) * radiusScale);
+		}
+		
 	}
 	
 }
