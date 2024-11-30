@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private EventReference music;
     public FMOD.Studio.EventInstance musicPlayEvent;
-
     public MoveDown moveDown;
 
     private void Start()
@@ -23,6 +22,9 @@ public class GameManager : MonoBehaviour
         des.loadSampleData();
 
         musicPlayEvent = RuntimeManager.CreateInstance(music);
+
+
+        BeatTrackerr.fixedBeatUpdate += moveDown.StartScrolling;
     }
 
     private void Update()
@@ -37,7 +39,8 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Start scrolling")]
     public void StartGame()
     {
-        musicPlayEvent.start();
-        moveDown.StartScrolling();
+        BeatTrackerr.instance.StartMusic();
+        
+        //moveDown.StartScrolling();
     }
 }
