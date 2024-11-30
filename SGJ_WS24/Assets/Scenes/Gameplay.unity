@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df04e9d6a2e419293d723563e96ecc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHit: 100
+  maxHit: 5
 --- !u!4 &61380358
 Transform:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yPositionToMoveTextureUp: -13
-  speed: 4
+  speed: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2539234596713500774, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
       propertyPath: speed
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4017021018067307150, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
       propertyPath: m_Name

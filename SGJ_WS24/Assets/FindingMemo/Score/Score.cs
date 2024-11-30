@@ -61,19 +61,19 @@ public class Score : MonoBehaviour
 
 	private HitType GetHitTypeTemp(uint hitScore)
 	{
-		if (hitScore >= 95)
+		if (hitScore * 20 >= 95)
 		{
 			return HitType.Perfect;
 		}
-		if (hitScore >= 80)
+		if (hitScore * 20 >= 80)
 		{
 			return HitType.Great;
 		}
-		if (hitScore >= 60)
+		if (hitScore * 20 >= 60)
 		{
 			return HitType.Good;
 		}
-		if (hitScore >= 40)
+		if (hitScore * 20 >= 40)
 		{
 			return HitType.Bad;
 		}
