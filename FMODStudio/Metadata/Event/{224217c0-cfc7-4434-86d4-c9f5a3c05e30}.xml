@@ -25,10 +25,7 @@
 		<relationship name="markerTracks">
 			<destination>{99e4b07a-95da-4dc8-b4e0-1b93cbec3140}</destination>
 			<destination>{25d19c7e-6538-43e6-8ca3-d5ffdb1147b2}</destination>
-<<<<<<< Updated upstream
-=======
 			<destination>{73dd61fd-2c59-4080-a82d-833fd86cbbc4}</destination>
->>>>>>> Stashed changes
 		</relationship>
 		<relationship name="groupTracks">
 			<destination>{a7ce9c52-7338-4149-bede-bb9633d09406}</destination>
@@ -65,10 +62,7 @@
 	<object class="EventAutomatableProperties" id="{0d2e6d6a-a54e-4d5e-bc4a-a6077938b9a8}" />
 	<object class="MarkerTrack" id="{99e4b07a-95da-4dc8-b4e0-1b93cbec3140}" />
 	<object class="MarkerTrack" id="{25d19c7e-6538-43e6-8ca3-d5ffdb1147b2}" />
-<<<<<<< Updated upstream
-=======
 	<object class="MarkerTrack" id="{73dd61fd-2c59-4080-a82d-833fd86cbbc4}" />
->>>>>>> Stashed changes
 	<object class="GroupTrack" id="{a7ce9c52-7338-4149-bede-bb9633d09406}">
 		<relationship name="modules">
 			<destination>{9b52c1f0-0433-42c7-a339-3ea3f22247b5}</destination>
@@ -89,15 +83,14 @@
 		<relationship name="markers">
 			<destination>{04edd146-28e4-4f63-b9df-2ab8e102a6e4}</destination>
 			<destination>{d1061b7f-b83d-44b9-8a97-84cb1ebda0a0}</destination>
-<<<<<<< Updated upstream
-=======
 			<destination>{6a4d5517-8660-4bde-ad79-69e9b37a2c11}</destination>
 			<destination>{ab11f3c9-5ba1-4cd6-b1a5-3b196715fcdf}</destination>
 			<destination>{e3eeb5aa-3547-4db9-88a2-f4eb04648df1}</destination>
 			<destination>{8aca7b9d-8fc3-4d4e-986b-19f7b543d89c}</destination>
 			<destination>{ddf75c00-7776-4f1c-8251-3d600d54bf48}</destination>
 			<destination>{fd4e7b7b-3832-41ad-abad-fa0047419538}</destination>
->>>>>>> Stashed changes
+			<destination>{97232df8-b43b-4849-a63a-5494717a773b}</destination>
+			<destination>{51a0319d-5877-4079-b06e-5d65df57af03}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{98aebe7b-27b3-4e4d-8e1f-e1ae2c9250bc}">
@@ -178,8 +171,6 @@
 			<destination>{ae37664f-ab5d-4602-957c-932f652a3c3d}</destination>
 		</relationship>
 		<relationship name="markerTrack">
-<<<<<<< Updated upstream
-=======
 			<destination>{73dd61fd-2c59-4080-a82d-833fd86cbbc4}</destination>
 		</relationship>
 	</object>
@@ -264,8 +255,32 @@
 			<destination>{ae37664f-ab5d-4602-957c-932f652a3c3d}</destination>
 		</relationship>
 		<relationship name="markerTrack">
->>>>>>> Stashed changes
 			<destination>{25d19c7e-6538-43e6-8ca3-d5ffdb1147b2}</destination>
+		</relationship>
+	</object>
+	<object class="TempoMarker" id="{97232df8-b43b-4849-a63a-5494717a773b}">
+		<property name="position">
+			<value>8</value>
+		</property>
+		<property name="tempo">
+			<value>60</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{ae37664f-ab5d-4602-957c-932f652a3c3d}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{99e4b07a-95da-4dc8-b4e0-1b93cbec3140}</destination>
+		</relationship>
+	</object>
+	<object class="TempoMarker" id="{51a0319d-5877-4079-b06e-5d65df57af03}">
+		<property name="position">
+			<value>16</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{ae37664f-ab5d-4602-957c-932f652a3c3d}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{99e4b07a-95da-4dc8-b4e0-1b93cbec3140}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{66e7529b-56cf-4f8d-be18-88d4c7eca993}">
