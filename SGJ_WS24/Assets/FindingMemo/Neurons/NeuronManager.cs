@@ -116,8 +116,6 @@ namespace FindingMemo.Neurons
 
             var neuron = neurons[0];
             neurons.RemoveAt(0);
-            
-            Destroy(neuron.gameObject);
             neuron.SetAlreadyRemovedFlag();
             TriggerOnNeuronChanged(neuron);
         }
