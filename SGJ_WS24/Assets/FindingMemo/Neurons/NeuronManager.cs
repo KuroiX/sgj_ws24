@@ -9,15 +9,16 @@ namespace FindingMemo.Neurons
     {
         [SerializeField] private GameObject neuronPrefab;
         [SerializeField] private HitNeurons hitNeurons;
-        [SerializeField] private Transform testNeuron;
         [SerializeField] private Score scoreManager;
-        
 
-        private readonly Queue<Transform> neurons = new();
+        public static NeuronManager Instance;
+        private readonly List<Neuron> neurons = new();
 
         private void Awake()
         {
-            neurons.Enqueue(testNeuron);
+            if (Instance != null) return;
+            Instance = this;
+            neurons.Clear();
         }
 
         private void Start()
@@ -26,17 +27,17 @@ namespace FindingMemo.Neurons
         }
 
 
-        private Transform GetNextNeuron()
+        private Neuron GetNextNeuron()
         {
             if (neurons.Count == 0) return null;
-            return neurons.Peek();
+            return neurons[0];
         }
 
         private Vector2 GetDistanceToNearestNeuronFrom(Vector3 position)
         {
             var nearestNeuron = GetNextNeuron();
 
-            Vector2 distance = position - nearestNeuron.position;
+            Vector2 distance = position - nearestNeuron.transform.position;
             distance.x = Math.Abs(distance.x);
             distance.y = Math.Abs(distance.y);
 
@@ -52,8 +53,16 @@ namespace FindingMemo.Neurons
         {
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
-            // TODO: call score method
-            print($"distance: {distance}");
+        }
+
+        public void AddToQueue(Neuron neuron)
+        {
+            neurons.Add(neuron);
+            neurons.Sort((a, b) => a.transform.position.y < b.transform.position.y
+                ? -1
+                : 1);
+
+            print($"added neuron {neuron.name} at index {neurons.IndexOf(neuron)}");
         }
     }
 }
