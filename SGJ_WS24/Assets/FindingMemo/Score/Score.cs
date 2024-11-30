@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 public class Score : MonoBehaviour
 {
 	// constants
-	[SerializeField] private float maxHit = 100f;
-	
-	private readonly Dictionary<uint, HitType> hitScoreToHitType = new Dictionary<uint, HitType> {
+	[SerializeField] private float radius = 10f;
+	private readonly Dictionary<uint, HitType> displayScoreToHitType = new() {
 		{100, HitType.Perfect},
 		{80, HitType.Great},
 		{60, HitType.Good},
@@ -17,7 +17,7 @@ public class Score : MonoBehaviour
 	};
 	
 	// privates
-	private HitType[] hitHistory;
+	private uint streak;
 	private uint totalScore;
 	
 	// publics
@@ -30,72 +30,80 @@ public class Score : MonoBehaviour
 		}
 	}
 	public event Action<uint> OnScoreChange;
+	public event Action<float> OnMultiplierChange;
 	public event Action<HitType> OnHit;
 	
 	// event functions
 	private void Start()
 	{
-		hitHistory = new[] {HitType.Miss, HitType.Miss, HitType.Miss, HitType.Miss, HitType.Miss};
 		totalScore = 0;
+		streak = 0;
 	}
 	
 	// public functions
 	public void HitNeuron(Vector2 difference)
 	{
-		uint hitScore = DifferenceToHitScore(difference);
-		//HitType hitType = hitScoreToHitType[hitScore];
-		HitType hitType = GetHitTypeTemp(hitScore);
-		CycleHitHistory(hitType);  // TODO: event for combos
-		uint scoreAddition = HitScoreToScoreAddition(hitScore);
-		
+		float normScore = DifferenceToNormScore(difference);
+		uint displayScore = NormScoreToDisplayScore(normScore);
+		HitType hitType = displayScoreToHitType[displayScore];
 		OnHit?.Invoke(hitType);
-		TotalScore += scoreAddition;
+		uint comboScore = DisplayScoreToComboScore(displayScore, hitType);
+		TotalScore += comboScore;
 	}
 	
 	// score management functions
-	private uint DifferenceToHitScore(Vector2 difference)
+	private float DifferenceToNormScore(Vector2 difference)
 	{
-		float hitScore = maxHit - difference.y;  // difference.magnitude?
-		return (uint)Mathf.RoundToInt(Math.Max(0, hitScore));  // hinge loss
+		float normScore = Math.Max(0, radius - difference.y) / radius;
+		return normScore;
 	}
 
-	private HitType GetHitTypeTemp(uint hitScore)
+	private uint NormScoreToDisplayScore(float normScore)
 	{
-		if (hitScore * 20 >= 95)
+		float normScoreExp = Mathf.Exp(normScore * 4.5f) / Mathf.Exp(4.5f) - 1f / Mathf.Exp(4.5f);
+
+		int intervals = 5;
+		float intervalSize = 1f / intervals;
+		float scoreInterval = 0;
+		for (int i = intervals - 1; i >= 0; i++)
 		{
-			return HitType.Perfect;
+			if (normScoreExp >= intervalSize * i)
+			{
+				scoreInterval = i;
+				break;
+			}
 		}
-		if (hitScore * 20 >= 80)
+
+		return scoreInterval switch
 		{
-			return HitType.Great;
-		}
-		if (hitScore * 20 >= 60)
-		{
-			return HitType.Good;
-		}
-		if (hitScore * 20 >= 40)
-		{
-			return HitType.Bad;
-		}
-		
-		return HitType.Miss;
+			4 => 100 // perfect
+			,
+			3 => 75 // great
+			,
+			2 => 50 // good
+			,
+			1 => 25 // bad
+			,
+			0 => 0 // miss
+			,
+			_ => throw new Exception("Impossible! Perhaps the archives are incomplete?")
+		};
 	}
 
-	private uint HitScoreToScoreAddition(uint hitScore)  // combos
+	private uint DisplayScoreToComboScore(uint displayScore, HitType hitType)  // combos
 	{
-		float multiplyer = 1;  // TODO: multiplyer system using hit history
-		Assert.IsTrue(multiplyer > 0);
-		return (uint)Mathf.RoundToInt(hitScore * multiplyer);
-	}
-	
-	// helper functions
-	private void CycleHitHistory(HitType hitType)
-	{
-		for (int i = 0; i < hitHistory.Length - 1; i++)
+		HashSet<HitType> goodHits = new HashSet<HitType> {HitType.Perfect, HitType.Great, HitType.Good};
+		if (goodHits.Contains(hitType))
 		{
-			hitHistory[i] = hitHistory[i + 1];
+			streak++;
 		}
-		hitHistory[^1] = hitType;
+		else
+		{
+			streak = 0;
+		}
+		float multiplier = Mathf.Max(1, streak / 2);  // integer division intended
+		OnMultiplierChange?.Invoke(multiplier);
+		return (uint) (displayScore * multiplier);
 	}
 	
 }
