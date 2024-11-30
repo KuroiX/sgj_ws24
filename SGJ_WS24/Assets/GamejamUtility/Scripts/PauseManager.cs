@@ -1,9 +1,24 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
+    public event Action<int> OnScoreChanged;
+
+    public int Score
+    {
+        get => _score;
+        private set
+        {
+            _score = value;
+            OnScoreChanged?.Invoke(_score);
+        }
+    }
+
+    private int _score;
+    
     public static event Action<bool> PauseTriggered
     {
         add => _boolEvent.EventTriggered += value;
