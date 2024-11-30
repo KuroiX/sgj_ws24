@@ -4,9 +4,9 @@ namespace FindingMemo.Neurons
 {
     public class MoveDown : MonoBehaviour
     {
-        [SerializeField] private float speed;
+        [SerializeField] public float speed;
 
-        private void Update()
+        protected void Update()
         {
             transform.position += Vector3.down * (speed * Time.deltaTime);
         }
