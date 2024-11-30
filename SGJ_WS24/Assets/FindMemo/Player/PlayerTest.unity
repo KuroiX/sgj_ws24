@@ -259,6 +259,17 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1496329545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9053708145707244656, guid: 97212acb2d50a354ab53027e711a719a, type: 3}
+  m_PrefabInstance: {fileID: 2364978570037730971}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fed0c9cd34bebe47bf1a43c26faf247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2364978570037730971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -316,7 +327,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97212acb2d50a354ab53027e711a719a, type: 3}
---- !u!1001 &8868639007229256995
+--- !u!1001 &6109054504468668658
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -324,59 +335,63 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4017021018067307150, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
-      propertyPath: m_Name
-      value: Neuron
-      objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.12
+      value: -3.7487872
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.89042103
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.015627267
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6033348126351773390, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+    - target: {fileID: 2431273979610380152, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3372868968012750187, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
+      propertyPath: m_Name
+      value: NeuronManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5401696325168783296, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
+      propertyPath: hitNeurons
+      value: 
+      objectReference: {fileID: 1496329545}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 3f619f633cbd3644d97579482e9f4784, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 668217619}
   - {fileID: 2364978570037730971}
-  - {fileID: 8868639007229256995}
+  - {fileID: 6109054504468668658}

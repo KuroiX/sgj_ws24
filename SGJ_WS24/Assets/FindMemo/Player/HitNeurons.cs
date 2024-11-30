@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,9 +6,8 @@ namespace FindMemo.Player
 {
     public class HitNeurons : MonoBehaviour
     {
+        public Action<Vector3> OnHitted;
         private Controls actions;
-
-        private bool isInNeuronArea = false;
 
         private void OnEnable()
         {
@@ -21,21 +21,10 @@ namespace FindMemo.Player
             actions?.Default.Disable();
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.CompareTag("Neuron")) return;
-            isInNeuronArea = true;
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (!other.CompareTag("Neuron")) return;
-            isInNeuronArea = false;
-        }
 
         private void OnHit(InputAction.CallbackContext callbackContext)
         {
-            print($"hit success: {isInNeuronArea}");
+            OnHitted?.Invoke(transform.position);
         }
     }
 }
