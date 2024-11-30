@@ -3,13 +3,25 @@ using UnityEngine;
 
 public class MemoryCardManager : MonoBehaviour
 {
+    [SerializeField] private Score scoreManager;
+    
     [SerializeField] private MemoryCardAnimationManager memoryCardAnimationManager;
     [SerializeField] private MemoryCard memoryCardPrefab;
     [SerializeField] private MemoryCardInfo[] memoryCardObjs;
     
     [SerializeField] private int currentMemoryCardIndex = 0;
     [SerializeField] private MemoryCard currentMemoryCard;
+
+    private void OnEnable()
+    {
+        scoreManager.OnScoreChange += OnScoreChanged;
+    }
     
+    private void OnDisable()
+    {
+        scoreManager.OnScoreChange -= OnScoreChanged;
+    }
+
     [ContextMenu(nameof(SpawnNextMemoryCard))]
     public void SpawnNextMemoryCard(MemoryCardInfo memoryCardInfo)
     {
