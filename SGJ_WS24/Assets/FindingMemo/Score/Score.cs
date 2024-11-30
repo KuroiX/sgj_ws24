@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 public class Score : MonoBehaviour
 {
 	// constants
-	[SerializeField] private float maxHit = 10f;
-	
-	private readonly Dictionary<uint, HitType> displayScoreToHitType = new Dictionary<uint, HitType> {
+	[SerializeField] private float radius = 10f;
+	private readonly Dictionary<uint, HitType> displayScoreToHitType = new() {
 		{100, HitType.Perfect},
 		{80, HitType.Great},
 		{60, HitType.Good},
@@ -54,32 +54,40 @@ public class Score : MonoBehaviour
 	// score management functions
 	private float DifferenceToNormScore(Vector2 difference)
 	{
-		float normScore = Math.Abs(maxHit - difference.y) / maxHit;
+		float normScore = Math.Max(0, radius - difference.y) / radius;
 		return normScore;
 	}
 
 	private uint NormScoreToDisplayScore(float normScore)
 	{
-		if (normScore >= 0.95)
+		float normScoreExp = Mathf.Exp(normScore * 4.5f) / Mathf.Exp(4.5f) - 1f / Mathf.Exp(4.5f);
+
+		int intervals = 5;
+		float intervalSize = 1f / intervals;
+		float scoreInterval = 0;
+		for (int i = intervals - 1; i >= 0; i++)
 		{
-			return 100;
+			if (normScoreExp >= intervalSize * i)
+			{
+				scoreInterval = i;
+				break;
+			}
 		}
-		if (normScore >= 0.8)
+
+		return scoreInterval switch
 		{
-			return 80;
-		}
-		if (normScore >= 0.6)
-		{
-			return 60;
-		}
-		if (normScore >= 0.4)
-		{
-			return 30;
-		}
-		else
-		{
-			return 0;
-		}
+			4 => 100 // perfect
+			,
+			3 => 75 // great
+			,
+			2 => 50 // good
+			,
+			1 => 25 // bad
+			,
+			0 => 0 // miss
+			,
+			_ => throw new Exception("Impossible! Perhaps the archives are incomplete?")
+		};
 	}
 
 	private uint DisplayScoreToComboScore(uint displayScore, HitType hitType)  // combos
@@ -93,7 +101,7 @@ public class Score : MonoBehaviour
 		{
 			streak = 0;
 		}
-		float multiplier = Mathf.Max(1, streak / 2);  // interger division intended
+		float multiplier = Mathf.Max(1, streak / 2);  // integer division intended
 		OnMultiplierChange?.Invoke(multiplier);
 		return (uint) (displayScore * multiplier);
 	}
