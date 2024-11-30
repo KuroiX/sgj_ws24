@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FindingMemo.Player;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace FindingMemo.Neurons
 {
@@ -41,25 +42,30 @@ namespace FindingMemo.Neurons
 
         private void AddConnectionsToNeurons()
         {
-            // TODO: add more than first two
-            var neuron0Position = neurons[0].transform.position;
-            var neuron1Position = neurons[1].transform.position;
+            for (int i = 0; i + 1 < neurons.Count; i++)
+            {
+                var neuron0Position = neurons[i].transform.position;
+                var neuron1Position = neurons[i + 1].transform.position;
 
-            var positionInBetweenNeurons = neuron0Position + 0.5f * (neuron1Position - neuron0Position);
+                var positionInBetweenNeurons = neuron0Position + 0.5f * (neuron1Position - neuron0Position);
 
-            var yDistance = neuron1Position.y - neuron0Position.y;
-            var distance = Vector2.Distance(neuron1Position, neuron0Position);
-            var scale = distance / lineHeights[2];
+                var yDistance = neuron1Position.y - neuron0Position.y;
+                var distance = Vector2.Distance(neuron1Position, neuron0Position);
 
-            print(Mathf.Acos(yDistance / distance));
-            var rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Acos(yDistance / distance) *
-                                                  (neuron1Position.x < neuron0Position.x
-                                                      ? 1
-                                                      : -1));
+                print(Mathf.Acos(yDistance / distance));
+                var rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Acos(yDistance / distance) *
+                                                      (neuron1Position.x < neuron0Position.x
+                                                          ? 1
+                                                          : -1));
 
-            var neuronLine = Instantiate(neuronLines[2], positionInBetweenNeurons, rotation);
-            neuronLine.transform.localScale = Vector3.one * scale * 0.5f * 0.8f;
+                int randomIndex = Random.Range(0, 2);
+                var neuronLine = Instantiate(neuronLines[randomIndex], positionInBetweenNeurons, rotation);
+                var scale = distance / lineHeights[randomIndex];
+                neuronLine.transform.localScale = Vector3.one * scale * 0.5f * 0.8f;
+                neuronLine.transform.parent = map;
+            }
         }
+
 
         private void Start()
         {
