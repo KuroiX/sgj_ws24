@@ -1,5 +1,5 @@
 using System;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 
 public class BeatPlacer : MonoBehaviour
@@ -15,7 +15,7 @@ public class BeatPlacer : MonoBehaviour
     private bool shoudPlay;
     private bool shoudPlaceBeat;
     private bool shoudPlaceMarker;
-    
+    /*
     private void Startt()
     {
         try
@@ -84,4 +84,5 @@ public class BeatPlacer : MonoBehaviour
     {
         shoudPlaceMarker = true;
     }
+    */
 }
