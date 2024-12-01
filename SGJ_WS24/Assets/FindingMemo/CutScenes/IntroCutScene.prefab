@@ -149,6 +149,12 @@ MonoBehaviour:
       Data3: 1236890518
       Data4: 2060057399
     Path: event:/Voicelines/male-002_fuckwhosthis
+  - Guid:
+      Data1: -1543747434
+      Data2: 1223710181
+      Data3: 1936281759
+      Data4: -1693845255
+    Path: event:/Voicelines/brain-001_thinking
 --- !u!114 &1064497647094078101
 MonoBehaviour:
   m_ObjectHideFlags: 0

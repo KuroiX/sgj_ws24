@@ -122,6 +122,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voiceLines:
   - Guid:
+      Data1: 1996493773
+      Data2: 1245096405
+      Data3: 492913335
+      Data4: -1454428582
+    Path: event:/Voicelines/brain-002_ohh
+  - Guid:
       Data1: -1081582869
       Data2: 1134636621
       Data3: -740869209
