@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace FindingMemo.Neurons
 {
+    [SelectionBase]
     public class Neuron : MonoBehaviour
     {
         [SerializeField] private float abziehen;

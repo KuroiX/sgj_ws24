@@ -25,13 +25,16 @@ namespace FindingMemo.Neurons
         
         private GameManager _gameManager;
 
+        public bool createLines;
+
         private void Awake()
         {
             if (Instance != null) return;
             Instance = this;
             Neurons.Clear();
             AddAllNeuronsToQueue();
-            AddConnectionsToNeurons();
+            if(createLines)
+                AddConnectionsToNeurons();
             
             _gameManager = FindObjectOfType<GameManager>();
         }

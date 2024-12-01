@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FaceRotator : MonoBehaviour
 {
@@ -11,12 +12,43 @@ public class FaceRotator : MonoBehaviour
     public float rotationSpeed = 5f; // How fast the face rotates
 
     private float moveDirection = 0f;
+    private Controls actions;
 
-    void Update()
+    private void OnEnable()
     {
-        // Handle movement
-        moveDirection = Input.GetAxis("Horizontal"); // Get input (-1 for left, 1 for right)
-        //transform.Translate(Vector3.right * moveDirection * speed * Time.deltaTime);
+        actions = new Controls();
+        // Subscribe to input actions
+        actions.Default.Move.performed += OnMoveInput;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from input actions
+        actions.Default.Move.performed -= OnMoveInput;
+    }
+    
+    
+    private void OnMoveInput(InputAction.CallbackContext input)
+    {
+        moveDirection = input.ReadValue<float>();
+    }
+
+    private void OnMoveLeft(InputAction.CallbackContext context)
+    {
+        Debug.Log("Test: move left");
+        moveDirection = -1f; // Move left
+    }
+
+    private void OnMoveRight(InputAction.CallbackContext context)
+    {
+        Debug.Log("Test: move right");
+        moveDirection = 1f; // Move right
+    }
+
+    private void Update()
+    {
+        // Apply movement (if necessary for other parts of your game)
+        // transform.Translate(Vector3.right * moveDirection * speed * Time.deltaTime);
 
         // Handle face rotation
         RotateFace();
