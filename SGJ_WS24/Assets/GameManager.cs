@@ -1,4 +1,6 @@
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using FindingMemo;
 using FindingMemo.Neurons;
@@ -31,22 +33,31 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        hitNeurons.OnHitted += OnHitted;
+    }
+
+    private void Start()
+    {
         foreach (var down in moveDown)
         {
             BeatTrackerr.fixedBeatUpdate += down.StartScrolling;
         }
-        
-        hitNeurons.OnHitted += OnHitted;
     }
 
     private void OnHitted()
     {
         if (_gameState != GameState.Waiting) return;
-        
+
+        StartCoroutine(StartGameRoutine());
+    }
+
+    IEnumerator StartGameRoutine()
+    {
+        yield return null;
         GameState = GameState.Playing;
         StartGame();
     }
-
+    
     private void OnDisable()
     {
         foreach (var down in moveDown)

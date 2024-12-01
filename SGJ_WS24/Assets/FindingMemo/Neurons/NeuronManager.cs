@@ -22,6 +22,8 @@ namespace FindingMemo.Neurons
 
         public static NeuronManager Instance;
         public readonly List<Neuron> Neurons = new();
+        
+        private GameManager _gameManager;
 
         private void Awake()
         {
@@ -30,6 +32,8 @@ namespace FindingMemo.Neurons
             Neurons.Clear();
             AddAllNeuronsToQueue();
             AddConnectionsToNeurons();
+            
+            _gameManager = FindObjectOfType<GameManager>();
         }
 
         private void TriggerOnNeuronChanged(Neuron neuron)
@@ -107,8 +111,8 @@ namespace FindingMemo.Neurons
 
         private void OnHitPressed()
         {
-            if (Neurons.Count == 0) return;
-
+            if (Neurons.Count == 0 || _gameManager.GameState != GameState.Playing) return;
+            
             var distance = GetDistanceToNearestNeuronFromPlayer();
             scoreManager.HitNeuron(distance);
 
@@ -122,7 +126,16 @@ namespace FindingMemo.Neurons
             var neuron = Neurons[0];
             Neurons.RemoveAt(0);
             neuron.SetAlreadyRemovedFlag();
-            TriggerOnNeuronChanged(Neurons[0]);
+            
+            if (Neurons.Count == 0)
+            {
+                _gameManager.GameState = GameState.Spinning;
+                TriggerOnNeuronChanged(null);
+            }
+            else
+            {
+                TriggerOnNeuronChanged(Neurons[0]);
+            }
         }
     }
 }

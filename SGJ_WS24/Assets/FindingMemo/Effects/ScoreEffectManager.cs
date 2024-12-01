@@ -1,9 +1,12 @@
 using System;
+using FindingMemo;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ScoreEffectManager : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
+    
     [SerializeField] private Score scoreManager;
     
     [Header("schrift")]
