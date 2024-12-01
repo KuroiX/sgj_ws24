@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FindingMemo.Background;
 using FindingMemo.Neurons;
 using FMODUnity;
 using Unity.VisualScripting;
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private EventReference music;
     public FMOD.Studio.EventInstance musicPlayEvent;
-    public MoveDown moveDown;
+    public List<MoveDown> moveDown;
 
     private void Start()
     {
@@ -24,7 +25,10 @@ public class GameManager : MonoBehaviour
         musicPlayEvent = RuntimeManager.CreateInstance(music);
 
 
-        BeatTrackerr.fixedBeatUpdate += moveDown.StartScrolling;
+        foreach (var down in moveDown)
+        {
+            BeatTrackerr.fixedBeatUpdate += down.StartScrolling;
+        }
     }
 
     private void Update()
