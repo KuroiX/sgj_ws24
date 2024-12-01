@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{48ab039c-2da7-45b0-a813-d904e816cc92}">
+		<property name="assetPath">
+			<value>FailedHitPiano-005.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5411880c-144d-4c6c-9598-d5e198543e5e}</destination>
+		</relationship>
+	</object>
+</objects>
