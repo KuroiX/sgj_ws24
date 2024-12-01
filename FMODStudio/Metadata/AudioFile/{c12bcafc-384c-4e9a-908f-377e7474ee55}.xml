@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c12bcafc-384c-4e9a-908f-377e7474ee55}">
+		<property name="assetPath">
+			<value>female-001.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.01675</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5411880c-144d-4c6c-9598-d5e198543e5e}</destination>
+		</relationship>
+	</object>
+</objects>
