@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6ae71b32b14515abbb51b60544a004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playOnAwake: 0
+  playOnAwake: 1
   sceneLoader: {fileID: 1154202649082142747}
 --- !u!114 &7137837483774133098
 MonoBehaviour:
