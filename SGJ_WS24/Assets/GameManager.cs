@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FindingMemo;
+using FindingMemo.CutScenes;
 using FindingMemo.Neurons;
 using FindingMemo.Player;
 using FMODUnity;
@@ -15,6 +16,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HitNeurons hitNeurons;
 
     [SerializeField] private GameObject spinner;
+    [SerializeField] private PlayOutroCutScene playOutroCutScene;
+    [SerializeField] private Score scoreManager;
+
+    [SerializeField] private int threshold;
     
 
     public GameState GameState
@@ -65,10 +70,16 @@ public class GameManager : MonoBehaviour
     private void StartSpinner(GameState state)
     {
         Debug.Log($"State: {state.ToString()}");
+
+        if (state == GameState.Spinning)
+        {
+            spinner.SetActive(true);
+        } 
+        else if (state == GameState.End)
+        {
+            playOutroCutScene.PlayOutro(scoreManager.TotalScore >= threshold);
+        }
         
-        if (state != GameState.Spinning) return;
-        
-        spinner.SetActive(true);
     }
     
     private void OnDisable()
