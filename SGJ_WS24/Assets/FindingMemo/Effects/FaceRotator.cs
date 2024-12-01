@@ -18,15 +18,19 @@ public class FaceRotator : MonoBehaviour
     {
         actions = new Controls();
         // Subscribe to input actions
-        actions.Default.MoveLeftOnLanes.performed += OnMoveLeft;
-        actions.Default.MoveRightOnLanes.performed += OnMoveRight;
+        actions.Default.Move.performed += OnMoveInput;
     }
 
     private void OnDisable()
     {
         // Unsubscribe from input actions
-        actions.Default.MoveLeftOnLanes.performed -= OnMoveLeft;
-        actions.Default.MoveRightOnLanes.performed -= OnMoveRight;
+        actions.Default.Move.performed -= OnMoveInput;
+    }
+    
+    
+    private void OnMoveInput(InputAction.CallbackContext input)
+    {
+        moveDirection = input.ReadValue<float>();
     }
 
     private void OnMoveLeft(InputAction.CallbackContext context)
