@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FindingMemo.CutScenes
@@ -7,7 +9,10 @@ namespace FindingMemo.CutScenes
     {
         [SerializeField] private GameObject outroGood;
         [SerializeField] private GameObject outroBad;
-        private static readonly int Start = Animator.StringToHash("Start");
+        private static readonly int Start2 = Animator.StringToHash("Start");
+
+        [SerializeField] private float time;
+        
 
         private void Awake()
         {
@@ -29,7 +34,12 @@ namespace FindingMemo.CutScenes
             PlayOutro(true);
         }
 
-
+        public IEnumerator LoadScene()
+        {
+            yield return new WaitForSeconds(time);
+            FindObjectOfType<SceneLoader>().LoadSceneByIndex(0);
+        }
+        
         public void PlayOutro(bool rememberedName)
         {
             var outro = rememberedName
@@ -37,7 +47,9 @@ namespace FindingMemo.CutScenes
                 : outroBad;
 
             outro.SetActive(true);
-            outro.GetComponent<Animator>().SetTrigger(Start);
+            outro.GetComponent<Animator>().SetTrigger(Start2);
+            
+            StartCoroutine(LoadScene());
         }
     }
 }
