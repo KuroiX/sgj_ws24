@@ -10,6 +10,8 @@ public class StatsManager : MonoBehaviour
 {
     [SerializeField] private Score score;
     
+    [SerializeField] private TMP_Text StreakText;
+    [SerializeField] private TMP_Text MultiplierText;
     [SerializeField] private TMP_Text ScoreText;
     [SerializeField] private TMP_Text PerfectText;
     [SerializeField] private TMP_Text GreatText;
@@ -36,17 +38,21 @@ public class StatsManager : MonoBehaviour
     {
         score.OnHit += SetHitType;
         score.OnScoreChange += SetScore;
+        score.OnMultiplierChange += ChangeMultiplier;
+        score.OnStreakChange += ChangeStreak;
     }
 
     private void OnDisable()
     {
         score.OnHit -= SetHitType;
         score.OnScoreChange -= SetScore;
+        score.OnMultiplierChange -= ChangeMultiplier;
+        score.OnStreakChange -= ChangeStreak;
     }
 
     public void SetScore(uint score)
     {
-        Debug.Log("Score: "+ score);
+        //Debug.Log("Score: "+ score);
         //ScoreDotweenAnimation.optionalString = score.ToString();
         //scoreText.text = score.ToString();
         //ScoreDotweenAnimation.DORestart();
@@ -75,6 +81,28 @@ public class StatsManager : MonoBehaviour
         }
         
         
+    }
+    
+    public void ChangeStreak(uint streak)
+	{
+		StreakText.text = streak.ToString();
+		if (streak > 0)
+		{
+			StreakText.rectTransform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f, 13, 0.5f);
+		}
+	}
+    
+    public void ChangeMultiplier(uint multiplier)
+    {
+	    if (multiplier == 1)
+	    {
+		    MultiplierText.text = "";
+	    }
+	    else
+	    {
+		    MultiplierText.text = "x" + multiplier;
+		    MultiplierText.rectTransform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f, 13, 0.5f);
+	    }
     }
 
     public void AddUpPerfect()
