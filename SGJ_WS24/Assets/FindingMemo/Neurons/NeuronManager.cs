@@ -23,13 +23,16 @@ namespace FindingMemo.Neurons
         public static NeuronManager Instance;
         public readonly List<Neuron> Neurons = new();
 
+        public bool createLines;
+
         private void Awake()
         {
             if (Instance != null) return;
             Instance = this;
             Neurons.Clear();
             AddAllNeuronsToQueue();
-            AddConnectionsToNeurons();
+            if(createLines)
+                AddConnectionsToNeurons();
         }
 
         private void TriggerOnNeuronChanged(Neuron neuron)
