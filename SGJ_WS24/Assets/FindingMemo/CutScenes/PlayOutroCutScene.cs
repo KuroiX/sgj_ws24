@@ -17,14 +17,14 @@ namespace FindingMemo.CutScenes
 
 
         [ContextMenu("Play outro bad")]
-        public void PlayOutro()
+        public void PlayBadOutro()
         {
             PlayOutro(false);
         }
 
 
         [ContextMenu("Play outro good")]
-        public void PlayOutro2()
+        public void PlayGoodOutro()
         {
             PlayOutro(true);
         }
