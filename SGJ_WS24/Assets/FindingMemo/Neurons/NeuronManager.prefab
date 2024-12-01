@@ -45,9 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e837b1ff4ffee146bab8d80482ea79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neuronPrefab: {fileID: 4017021018067307150, guid: 989bc5db8ef43cd429305729931152d9, type: 3}
-  hitNeurons: {fileID: 0}
-  testNeuron: {fileID: 0}
+  player: {fileID: 0}
+  map: {fileID: 0}
+  scoreManager: {fileID: 0}
+  maximalDistanceToRemoveNeuron: 1.9
+  neuronLines:
+  - {fileID: 2124540024910744960, guid: 699802bc94b7bc849bda9c1ddb907017, type: 3}
+  - {fileID: 8553166488836274232, guid: 75a310dec790ae548a70e87dc5abce8f, type: 3}
+  - {fileID: 1906846201839435074, guid: 8b6f8b9de404d80498571208988ca6c8, type: 3}
 --- !u!1 &3812289404998371984
 GameObject:
   m_ObjectHideFlags: 0

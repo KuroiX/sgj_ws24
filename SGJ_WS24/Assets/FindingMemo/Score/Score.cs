@@ -1,24 +1,26 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class Score : MonoBehaviour
 {
-	// constants
-	[SerializeField] private float maxHit = 100f;
+	[SerializeField] private Transform playerTransform;
 	
-	private readonly Dictionary<uint, HitType> hitScoreToHitType = new Dictionary<uint, HitType> {
+	// constants
+	[SerializeField] private float[] scoreIntervals = {0f, 0.04f, 0.16f, 0.36f, 0.64f};
+	[SerializeField] private float radiusScale = 10f;
+	private readonly Dictionary<uint, HitType> displayScoreToHitType = new() {
 		{100, HitType.Perfect},
-		{80, HitType.Great},
-		{60, HitType.Good},
-		{40, HitType.Bad},
+		{75, HitType.Great},
+		{50, HitType.Good},
+		{25, HitType.Bad},
 		{0, HitType.Miss}
 	};
 	
 	// privates
-	private HitType[] hitHistory;
-	private uint totalScore;
+	private uint totalScore = 0;
+	private uint streak = 0;
+	private uint multiplier = 1;
 	
 	// publics
 	public uint TotalScore { 
@@ -29,73 +31,117 @@ public class Score : MonoBehaviour
 			OnScoreChange?.Invoke(totalScore);
 		}
 	}
-	public event Action<uint> OnScoreChange;
-	public event Action<HitType> OnHit;
-	
-	// event functions
-	private void Start()
-	{
-		hitHistory = new[] {HitType.Miss, HitType.Miss, HitType.Miss, HitType.Miss, HitType.Miss};
-		totalScore = 0;
+	public uint Streak { 
+		get => streak;
+		private set
+		{
+			streak = value;
+			OnStreakChange?.Invoke(streak);
+		}
 	}
-	
+	public uint Multiplier { 
+		get => multiplier;
+		private set
+		{
+			multiplier = value;
+			OnMultiplierChange?.Invoke(multiplier);
+		}
+	}
+	public event Action<uint> OnScoreChange;
+	public event Action<uint> OnStreakChange;
+	public event Action<uint> OnMultiplierChange;
+	public event Action<HitType> OnHit;
+
 	// public functions
 	public void HitNeuron(Vector2 difference)
 	{
-		uint hitScore = DifferenceToHitScore(difference);
-		//HitType hitType = hitScoreToHitType[hitScore];
-		HitType hitType = GetHitTypeTemp(hitScore);
-		CycleHitHistory(hitType);  // TODO: event for combos
-		uint scoreAddition = HitScoreToScoreAddition(hitScore);
-		
+		float normScore = DifferenceToNormScore(difference);
+		uint displayScore = NormScoreToDisplayScore(normScore);
+		HitType hitType = displayScoreToHitType[displayScore];
 		OnHit?.Invoke(hitType);
-		TotalScore += scoreAddition;
+		uint comboScore = DisplayScoreToComboScore(displayScore, hitType);
+		TotalScore += comboScore;
 	}
 	
 	// score management functions
-	private uint DifferenceToHitScore(Vector2 difference)
+	private float DifferenceToNormScore(Vector2 difference)
 	{
-		float hitScore = maxHit - difference.y;  // difference.magnitude?
-		return (uint)Mathf.RoundToInt(Math.Max(0, hitScore));  // hinge loss
+		//Debug.Log($"difference {difference}");
+		float normScore = Math.Max(0, radiusScale - difference.magnitude) / radiusScale;
+		//Debug.Log($"normScore {normScore}");
+		return normScore;
 	}
 
-	private HitType GetHitTypeTemp(uint hitScore)
+	private uint NormScoreToDisplayScore(float normScore)
 	{
-		if (hitScore * 20 >= 95)
+		//normScore = Mathf.Pow(normScore, 1);
+
+		float scoreInterval = 0;
+		for (int i = scoreIntervals.Length - 1; i >= 0; i--)
 		{
-			return HitType.Perfect;
+			if (normScore >= scoreIntervals[i])
+			{
+				scoreInterval = i;
+				break;
+			}
 		}
-		if (hitScore * 20 >= 80)
+		//Debug.Log($"scoreInterval {scoreInterval}");
+
+		return scoreInterval switch
 		{
-			return HitType.Great;
+			4 => 100 // perfect
+			,
+			3 => 75 // great
+			,
+			2 => 50 // good
+			,
+			1 => 25 // bad
+			,
+			0 => 0 // miss
+			,
+			_ => throw new Exception("Impossible! Perhaps the archives are incomplete?")
+		};
+	}
+
+	private uint DisplayScoreToComboScore(uint displayScore, HitType hitType)
+	{
+		HashSet<HitType> goodHits = new HashSet<HitType> {HitType.Perfect, HitType.Great, HitType.Good};
+		if (goodHits.Contains(hitType))
+		{
+			Streak++;
+			uint newStreak = Streak - (Multiplier-1) * ((Multiplier-1) + 1) / 2 - 1;  // triangular number
+			if (newStreak >= Multiplier)
+			{
+				Multiplier++;
+			}
+			Debug.Log($"streak {streak}, newStreak {newStreak}, multiplier {multiplier}");
 		}
-		if (hitScore * 20 >= 60)
+		else
 		{
-			return HitType.Good;
-		}
-		if (hitScore * 20 >= 40)
-		{
-			return HitType.Bad;
+			Streak = 0;
+			Multiplier = 1;
 		}
 		
-		return HitType.Miss;
+		return displayScore * Multiplier;
 	}
 
-	private uint HitScoreToScoreAddition(uint hitScore)  // combos
-	{
-		float multiplyer = 1;  // TODO: multiplyer system using hit history
-		Assert.IsTrue(multiplyer > 0);
-		return (uint)Mathf.RoundToInt(hitScore * multiplyer);
-	}
 	
-	// helper functions
-	private void CycleHitHistory(HitType hitType)
+	private void OnDrawGizmos()
 	{
-		for (int i = 0; i < hitHistory.Length - 1; i++)
+		Color[] colors = {
+			new Color(1,1,1, 0.25f),
+			new Color(1,1,1, 0.33f),
+			new Color(1,1,1, 0.5f),
+			new Color(1,1,1, 0.66f),
+			new Color(1,1,1, 0.9f)
+		};
+		
+		for (int i = scoreIntervals.Length - 1; i >= 0; i--)
 		{
-			hitHistory[i] = hitHistory[i + 1];
+			Gizmos.color = colors[i];
+			Gizmos.DrawSphere(playerTransform.position, (1 - scoreIntervals[i]) * radiusScale);
 		}
-		hitHistory[^1] = hitType;
+		
 	}
 	
 }

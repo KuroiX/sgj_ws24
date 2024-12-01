@@ -142,11 +142,6 @@ public class BeatTrackerr : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartMusic();
-        }
-
         musicPlayEvent.getPlaybackState(out musicPlayState);
 
         if (lastMusicPlayState != FMOD.Studio.PLAYBACK_STATE.PLAYING && musicPlayState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
