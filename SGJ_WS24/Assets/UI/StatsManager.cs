@@ -47,10 +47,8 @@ public class StatsManager : MonoBehaviour
     public void SetScore(uint score)
     {
         Debug.Log("Score: "+ score);
-        //ScoreDotweenAnimation.optionalString = score.ToString();
-        //scoreText.text = score.ToString();
-        //ScoreDotweenAnimation.DORestart();
-        ScoreText.text = score.ToString();
+        ScoreText.DOText(score.ToString(), 0.7f,false,ScrambleMode.Numerals);
+        ScoreText.transform.DOPunchScale(new Vector3(0.4f,0.4f,0.4f), 0.7f,18,0.4f);
     }
 
     private void SetHitType(HitType type)
