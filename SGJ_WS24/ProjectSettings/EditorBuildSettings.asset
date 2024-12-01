@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GamejamUtility/main_menu.unity
-    guid: 6b5ae4df258dfd24cb57cb041d265a80
+    path: Assets/GamejamUtility/main_menu_textures.unity
+    guid: 9845605c440b47f49934cda4ba8177fd
   - enabled: 1
     path: Assets/Scenes/IntroCutSceneTest.unity
     guid: 4e2f324daf584464abbd7d6e362f2632
   - enabled: 1
-    path: Assets/Scenes/Gameplay.unity
-    guid: 8343d31e2bf3e844baf479e300cb46af
+    path: Assets/Scenes/cooleres Gameplay.unity
+    guid: 6a41f9c9c9a84964b8ea9e02a619064d
   - enabled: 1
     path: Assets/Scenes/IntroCutSceneTest 1.unity
     guid: c50e1a1251cf1d44fb0f79083bd8200e
+  - enabled: 1
+    path: Assets/Scenes/cooleres Gameplay 1.unity
+    guid: 462d7b48ee83111459a040cb0a2929c9
   m_configObjects: {}
