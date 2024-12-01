@@ -16,9 +16,14 @@ public class Spin : MonoBehaviour
     
     public float rotationSpeed = 1; 
     public int spinScore = 0; 
-    public int spinScoreThreshold = 100; 
+    public int spinScoreThreshold = 99; 
     public float speedMultiplier = 1.0f;
     private float rotationAmount;
+
+    public Sprite[] sprites;
+    private SpriteRenderer _spriteRenderer;
+    private int _spriteNumber = 0;
+    
     
     private void OnEnable()
     {
@@ -41,6 +46,8 @@ public class Spin : MonoBehaviour
     void Start()
     {
         spinAction.Enable();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _spriteRenderer.sprite = sprites[_spriteNumber];
     }
 
     // Update is called once per frame
@@ -66,6 +73,10 @@ public class Spin : MonoBehaviour
         spinSpeed.z =  rotationAmount;
         transform.Rotate(spinSpeed);
         
+        ChangeSprite();
+        
+        AddSpinScoreToTotal();
+        
         /*
         if (rotationAmount >= 360f)
         {
@@ -81,6 +92,8 @@ public class Spin : MonoBehaviour
         value.Normalize();
         transform.up = value;
         
+        ChangeSprite();
+        
         AddSpinScoreToTotal();
     }
     
@@ -92,5 +105,15 @@ public class Spin : MonoBehaviour
             Debug.Log("Addscore" + spinScore);
             //ScoreManager.AddScore(spinScore);
         }
+    }
+
+    private void ChangeSprite()
+    {
+        if ((_spriteNumber < sprites.Length)  && (spinScore >= spinScoreThreshold / sprites.Length * _spriteNumber))
+        {
+            _spriteRenderer.sprite = sprites[_spriteNumber];
+            _spriteNumber++;
+        }
+
     }
 }
