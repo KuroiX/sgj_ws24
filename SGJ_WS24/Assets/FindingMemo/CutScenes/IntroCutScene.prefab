@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7273510237346504000}
   - component: {fileID: 5820390659848510596}
   - component: {fileID: 7137837483774133098}
+  - component: {fileID: 1064497647094078101}
   m_Layer: 0
   m_Name: IntroCutScene
   m_TagString: Untagged
@@ -148,6 +149,31 @@ MonoBehaviour:
       Data3: 1236890518
       Data4: 2060057399
     Path: event:/Voicelines/male-002_fuckwhosthis
+  - Guid:
+      Data1: -1543747434
+      Data2: 1223710181
+      Data3: 1936281759
+      Data4: -1693845255
+    Path: event:/Voicelines/brain-001_thinking
+--- !u!114 &1064497647094078101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2351202969813660731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cee80ef8f2420a9e3652cf2404a2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutSceneMusic:
+    Guid:
+      Data1: -213897293
+      Data2: 1131946897
+      Data3: -101432682
+      Data4: -655995629
+    Path: event:/cutsceneMusic
 --- !u!1001 &2438262227889394543
 PrefabInstance:
   m_ObjectHideFlags: 0

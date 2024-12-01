@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8915476464307919087}
   - component: {fileID: 3453542825943808666}
   - component: {fileID: 9030814892959435275}
+  - component: {fileID: 5917341578728762974}
   m_Layer: 0
   m_Name: OutroGood
   m_TagString: Untagged
@@ -121,6 +122,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voiceLines:
   - Guid:
+      Data1: 1996493773
+      Data2: 1245096405
+      Data3: 492913335
+      Data4: -1454428582
+    Path: event:/Voicelines/brain-002_ohh
+  - Guid:
       Data1: -1081582869
       Data2: 1134636621
       Data3: -740869209
@@ -132,6 +139,25 @@ MonoBehaviour:
       Data3: 2138437284
       Data4: 1196252120
     Path: event:/Voicelines/female-002_hihi
+--- !u!114 &5917341578728762974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801997151979271152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cee80ef8f2420a9e3652cf2404a2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutSceneMusic:
+    Guid:
+      Data1: -213897293
+      Data2: 1131946897
+      Data3: -101432682
+      Data4: -655995629
+    Path: event:/cutsceneMusic
 --- !u!1 &1303123003666687153
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +218,7 @@ GameObject:
   - component: {fileID: 3318546470821925642}
   - component: {fileID: 1972956976155592661}
   - component: {fileID: 7435718543190196950}
+  - component: {fileID: 413840053060695984}
   m_Layer: 0
   m_Name: OutroBad
   m_TagString: Untagged
@@ -318,3 +345,22 @@ MonoBehaviour:
       Data3: -661611342
       Data4: -550381403
     Path: event:/Voicelines/female-004_fuck
+--- !u!114 &413840053060695984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809946431955202548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cee80ef8f2420a9e3652cf2404a2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutSceneMusic:
+    Guid:
+      Data1: -213897293
+      Data2: 1131946897
+      Data3: -101432682
+      Data4: -655995629
+    Path: event:/cutsceneMusic
