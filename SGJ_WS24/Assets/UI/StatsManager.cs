@@ -26,12 +26,19 @@ public class StatsManager : MonoBehaviour
     private int goodScore = 0;
     private int greatScore = 0;
     private int perfectScore = 0;
+
+    private Vector3 startScale;
     
 
     [ContextMenu(nameof(Test))]
     public void Test()
     {
         SetScore(5000);
+    }
+
+    private void Start()
+    {
+	    startScale = ScoreText.transform.localScale;
     }
 
     private void OnEnable()
@@ -56,6 +63,7 @@ public class StatsManager : MonoBehaviour
         //ScoreDotweenAnimation.optionalString = score.ToString();
         //scoreText.text = score.ToString();
         //ScoreDotweenAnimation.DORestart();
+        ScoreText.transform.localScale = startScale;
         ScoreText.text = score.ToString();
         ScoreText.DOText(score.ToString(), 0.7f,false,ScrambleMode.Numerals);
         ScoreText.transform.DOPunchScale(new Vector3(0.4f,0.4f,0.4f), 0.7f,18,0.4f);
