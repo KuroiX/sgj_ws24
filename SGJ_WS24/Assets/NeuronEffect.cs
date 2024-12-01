@@ -35,6 +35,8 @@ public class NeuronEffect : MonoBehaviour
             lastNeuronParticleEffect.gameObject.SetActive(false);
         }
 
+        if (!neuron) return;
+
         lastNeuronParticleEffect = neuron.gameObject.GetComponentInChildren<ParticleSystem>();
         lastNeuronParticleEffect.Play();
     }
