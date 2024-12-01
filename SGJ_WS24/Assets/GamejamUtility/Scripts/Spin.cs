@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks.Triggers;
+using FindingMemo;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +10,9 @@ using UnityEngine.Serialization;
 
 public class Spin : MonoBehaviour
 {
+    [SerializeField] private Score scoreManager;
+    [SerializeField] private GameManager gameManager;
+    
     public InputAction spinAction;
     public Vector3 spinSpeed = new Vector3(0,0,0f);
 
@@ -65,6 +69,7 @@ public class Spin : MonoBehaviour
     {
         Debug.Log("score" + spinScore);
         spinScore += 1;
+        scoreManager.HitNeuron(Vector2.zero);
     }
 
     private void SpinSpinner(InputAction.CallbackContext callbackContext)
@@ -109,6 +114,12 @@ public class Spin : MonoBehaviour
 
     private void ChangeSprite()
     {
+        if (_spriteNumber >= sprites.Length)
+        {
+            gameManager.GameState = GameState.End;
+            return;
+        }
+        
         if ((_spriteNumber < sprites.Length)  && (spinScore >= spinScoreThreshold / sprites.Length * _spriteNumber))
         {
             _spriteRenderer.sprite = sprites[_spriteNumber];

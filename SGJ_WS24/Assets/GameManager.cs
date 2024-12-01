@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private HitNeurons hitNeurons;
 
+    [SerializeField] private GameObject spinner;
+    
+
     public GameState GameState
     {
         get => _gameState;
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         hitNeurons.OnHitted += OnHitted;
+        OnGameStateChanged += StartSpinner;
     }
 
     private void Start()
@@ -57,6 +61,15 @@ public class GameManager : MonoBehaviour
         GameState = GameState.Playing;
         StartGame();
     }
+
+    private void StartSpinner(GameState state)
+    {
+        Debug.Log($"State: {state.ToString()}");
+        
+        if (state != GameState.Spinning) return;
+        
+        spinner.SetActive(true);
+    }
     
     private void OnDisable()
     {
@@ -66,6 +79,7 @@ public class GameManager : MonoBehaviour
         }
         
         hitNeurons.OnHitted -= OnHitted;
+        OnGameStateChanged -= StartSpinner;
     }
 
     /*
