@@ -14,12 +14,12 @@ namespace FindingMemo.CutScenes
         public void StartMusic()
         {
             instance = RuntimeManager.CreateInstance(cutSceneMusic);
-            instance.start();
+            //instance.start();
         }
 
         public void StopMusic()
         {
-            instance.stop(STOP_MODE.ALLOWFADEOUT);
+            //instance.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
 }
