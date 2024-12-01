@@ -7,10 +7,11 @@ namespace FindingMemo.Background
         [SerializeField] private float yPositionToMoveTextureUp;
         [SerializeField] private float speed = 10;
         private Transform currentLastTexture;
+        private ScrollingTexturePart[] scrollingTextureParts;
 
         private void Awake()
         {
-            var scrollingTextureParts = transform.GetComponentsInChildren<ScrollingTexturePart>();
+            scrollingTextureParts = transform.GetComponentsInChildren<ScrollingTexturePart>();
             float yPos = int.MinValue;
 
             foreach (var scrolling in scrollingTextureParts)
@@ -33,6 +34,14 @@ namespace FindingMemo.Background
                 currentLastTexture.position.y + 10,
                 scrollingTexturePart.position.z);
             currentLastTexture = scrollingTexturePart;
+        }
+
+        public void StartBackgroundScroll()
+        {
+            foreach (var scrolling in scrollingTextureParts)
+            {
+                scrolling.StartScrolling();
+            }
         }
     }
 }

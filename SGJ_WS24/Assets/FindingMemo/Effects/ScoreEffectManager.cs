@@ -38,22 +38,27 @@ public class ScoreEffectManager : MonoBehaviour
         switch (type)
         {
             case HitType.Miss:
+                miss.Stop();
                 miss.Play();
                 hitEffect.Play();
                 break;
             case HitType.Bad:
+                bad.Stop();
                 bad.Play();
                 badweg.Play();
                 break;
             case HitType.Good:
+                good.Stop();
                 good.Play();
                 goodweg.Play();
                 break;
             case HitType.Great:
+                great.Stop();
                 great.Play();
                 greatweg.Play();
                 break;
             case HitType.Perfect:
+                perfect.Stop();
                 perfect.Play();
                 perfectweg.Play();
                 break;

@@ -12,7 +12,7 @@ public class NeuronEffect : MonoBehaviour
 
     private void Start()
     {
-        ActivateNeuronEffect(neuronManager.neurons[0]);
+        ActivateNeuronEffect(neuronManager.Neurons[0]);
     }
 
     private void OnEnable()
