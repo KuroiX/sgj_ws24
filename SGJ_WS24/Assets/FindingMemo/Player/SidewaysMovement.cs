@@ -96,7 +96,7 @@ namespace FindingMemo.Player
             if (useLanes) return;
 
             currentSpeed = doAccelerate
-                ? Math.Clamp(currentSpeed + accelerationPerFrame, 0, maxSpeed)
+                ? Math.Clamp(currentSpeed + accelerationPerFrame * Time.deltaTime, 0, maxSpeed)
                 : maxSpeed;
 
             transform.position += sign * currentSpeed * Time.deltaTime * Vector3.right;
