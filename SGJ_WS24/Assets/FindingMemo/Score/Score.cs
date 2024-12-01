@@ -108,21 +108,21 @@ public class Score : MonoBehaviour
 		HashSet<HitType> goodHits = new HashSet<HitType> {HitType.Perfect, HitType.Great, HitType.Good};
 		if (goodHits.Contains(hitType))
 		{
-			streak++;
-			uint newStreak = streak - (multiplier-1) * ((multiplier-1) + 1) / 2 - 1;  // triangular number
-			if (newStreak >= multiplier)
+			Streak++;
+			uint newStreak = Streak - (Multiplier-1) * ((Multiplier-1) + 1) / 2 - 1;  // triangular number
+			if (newStreak >= Multiplier)
 			{
-				multiplier++;
+				Multiplier++;
 			}
 			Debug.Log($"streak {streak}, newStreak {newStreak}, multiplier {multiplier}");
 		}
 		else
 		{
-			streak = 0;
-			multiplier = 1;
+			Streak = 0;
+			Multiplier = 1;
 		}
 		
-		return displayScore * multiplier;
+		return displayScore * Multiplier;
 	}
 
 	
