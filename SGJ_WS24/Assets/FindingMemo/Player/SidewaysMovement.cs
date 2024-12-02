@@ -2,11 +2,22 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace FindingMemo.Player
 {
     [ExecuteAlways] public class SidewaysMovement : MonoBehaviour
     {
+        [Header("Movement Settings")]
+        public float speed = 5f;
+
+        [Header("Face Rotation Settings")]
+        public Transform faceTransform; // Assign the face GameObject here
+        public float maxRotationAngle = 100f; // Maximum angle the face can rotate
+        public float rotationSpeed = 50f; // How fast the face rotates
+
+        public float moveDirection = 0f;
+        
         [SerializeField] private float accelerationPerFrame = .1f;
         [SerializeField] private float maxSpeed = 10;
         [SerializeField] private bool doAccelerate = true;
@@ -65,6 +76,7 @@ namespace FindingMemo.Player
         private void OnMoveLeft(InputAction.CallbackContext callbackContext)
         {
             ChangeLaneInDirection(-1);
+            Debug.Log("God morgon");
         }
 
         private void OnMoveRight(InputAction.CallbackContext callbackContext)
@@ -83,6 +95,8 @@ namespace FindingMemo.Player
         private void OnMoveInput(InputAction.CallbackContext input)
         {
             var inputValue = input.ReadValue<float>();
+            moveDirection = inputValue;
+            Debug.Log("input value: "+ inputValue);
             isMoving = true;
             sign = inputValue < 0
                 ? -1
@@ -92,6 +106,7 @@ namespace FindingMemo.Player
 
         private void Update()
         {
+            RotateFace();
             if (!isMoving) return;
             if (useLanes) return;
 
@@ -104,6 +119,7 @@ namespace FindingMemo.Player
                 Mathf.Clamp(transform.position.x, -sideLimit, sideLimit),
                 transform.position.y,
                 transform.position.z);
+            
         }
 
         private void OnCancelMoveInput(InputAction.CallbackContext input)
@@ -111,6 +127,24 @@ namespace FindingMemo.Player
             currentSpeed = 0;
             isMoving = false;
             sign = 0;
+        }
+        
+        private void RotateFace()
+        {
+            if (faceTransform == null)
+            {
+                Debug.LogWarning("Face Transform not assigned!");
+                return;
+            }
+
+            // Calculate target angle based on movement direction
+            float targetAngle = -moveDirection * maxRotationAngle;
+            Debug.Log("move "+moveDirection+ "Rot "+maxRotationAngle +"targetAngle :" + targetAngle);
+        
+        
+            // Smoothly rotate the face to the target angle
+            Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
+            faceTransform.localRotation = Quaternion.Slerp(faceTransform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }

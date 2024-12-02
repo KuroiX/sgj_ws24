@@ -1,3 +1,4 @@
+using FindingMemo.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,11 +9,12 @@ public class FaceRotator : MonoBehaviour
 
     [Header("Face Rotation Settings")]
     public Transform faceTransform; // Assign the face GameObject here
-    public float maxRotationAngle = 15f; // Maximum angle the face can rotate
-    public float rotationSpeed = 5f; // How fast the face rotates
+    public float maxRotationAngle = 100f; // Maximum angle the face can rotate
+    public float rotationSpeed = 50f; // How fast the face rotates
 
-    private float moveDirection = 0f;
+    public float moveDirection = 0f;
     private Controls actions;
+    
 
     private void OnEnable()
     {
@@ -33,13 +35,17 @@ public class FaceRotator : MonoBehaviour
     {
         Debug.Log("Test: move left");
         moveDirection = -1f; // Move left
+        moveDirection = context.ReadValue<float>();
+        Debug.Log("move dir left " + moveDirection);
     }
 
     private void OnMoveRight(InputAction.CallbackContext context)
     {
         Debug.Log("Test: move right");
         moveDirection = 1f; // Move right
+        moveDirection = context.ReadValue<float>();
     }
+    
 
     private void Update()
     {
@@ -47,6 +53,7 @@ public class FaceRotator : MonoBehaviour
         // transform.Translate(Vector3.right * moveDirection * speed * Time.deltaTime);
 
         // Handle face rotation
+
         RotateFace();
     }
 
@@ -60,7 +67,9 @@ public class FaceRotator : MonoBehaviour
 
         // Calculate target angle based on movement direction
         float targetAngle = -moveDirection * maxRotationAngle;
-
+        //Debug.Log("move "+moveDirection+ "Rot "+maxRotationAngle +"targetAngle :" + targetAngle);
+        
+        
         // Smoothly rotate the face to the target angle
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
         faceTransform.localRotation = Quaternion.Slerp(faceTransform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
